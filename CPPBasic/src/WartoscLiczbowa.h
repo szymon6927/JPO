@@ -1,3 +1,7 @@
+#ifndef WartoscLiczbowa_h
+#define WartoscLiczbowa_h
+
+#include <ostream>
 
 class WartoscLiczbowa
 {
@@ -7,3 +11,5 @@ public:
 	virtual ~WartoscLiczbowa()
 	{}
 };
+
+#endif

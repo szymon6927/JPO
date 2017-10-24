@@ -9,14 +9,13 @@ Liczba::Liczba(double re) {
 }
 
 Liczba::~Liczba(void) {
-	cout << "Likwiduje obiekt klasy Liczba \n";
+	cout << "Likwiduje obiekt klasy Liczba zawartosc to: " << this->re << "\n";
 }
 
 double Liczba::modul() {
 	return fabs(this->re);
 }
 
-std::ostream & operator<<(std::ostream &out, Liczba &l) {
-	out<<"Liczba rzeczywista: " << l.re<<"\n";
-	return out;
+std::ostream& operator<<(std::ostream& out, Liczba& l) {
+	return out<<"Liczba rzeczywista: " << l.re << "\n";
 }
