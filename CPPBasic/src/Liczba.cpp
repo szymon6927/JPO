@@ -4,12 +4,12 @@
 using namespace std;
 
 Liczba::Liczba(double re) {
-	cout<<"Konstruktor Liczba = "<<re<<"\n";
+	cout<<"Konstruktor liczby rzeczywistej = "<< re <<"\n";
 	this->re = re;
 }
 
 Liczba::~Liczba(void) {
-	cout << "Likwiduje obiekt klasy Liczba zawartosc to: " << this->re << "\n";
+//	cout << "Likwiduje obiekt klasy Liczba zawartosc to: " << this->re << "\n";
 }
 
 double Liczba::modul() {
@@ -17,5 +17,5 @@ double Liczba::modul() {
 }
 
 std::ostream& operator<<(std::ostream& out, Liczba& l) {
-	return out<<"Liczba rzeczywista: " << l.re << "\n";
+	return out << "Liczba rzeczywista: " << l.re << "\n";
 }
