@@ -105,7 +105,7 @@ public:
 		cout << "Destroy VectorOfVectors \n";
 		vec.clear();
 	}
-	friend ostream& operator<<();
+//	friend ostream& operator<<();
 	void add(const double wartosci[], int ilosc) {
 		cout << "ADD! \n";
 		vec.push_back(VektorNd(wartosci, ilosc));
@@ -119,10 +119,10 @@ public:
 			vec[i].wypisz();
 		}
 	}
-	void print(ostream& out = cout) {
-		out << "|------------------VectorOfVectors << ------------------------| \n";
-		out << *this;
-	}
+//	void print(ostream& out = cout) {
+//		out << "|------------------VectorOfVectors << ------------------------| \n";
+//		out << *this;
+//	}
 };
 
 
@@ -159,7 +159,7 @@ int main() {
 	cout << "\n\n vv2 \n\n";
 	vv2.printAll();
 
-	cout << vv1;
+//	cout << vv1;
 
 //	VektorNd v1(wartosci, 3);
 //	ofstream file("E:\\plik.txt");
