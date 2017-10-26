@@ -1,6 +1,7 @@
 package pl.edu.pg.eti.ksg.po.lab1;
 
 import pl.edu.pg.eti.ksg.po.lab1.transformacje.Translacja;
+import pl.edu.pg.eti.ksg.po.lab1.transformacje.ZlozenieTransformacji;
 import pl.edu.pg.eti.ksg.po.lab1.transformacje.Skalowanie;
 import pl.edu.pg.eti.ksg.po.lab1.transformacje.BrakTransformacjiOdwrotnejException;
 import pl.edu.pg.eti.ksg.po.lab1.transformacje.Punkt;
@@ -81,7 +82,40 @@ public class JAVABasic {
 			System.out.println(p3);
 		}
 		catch(BrakTransformacjiOdwrotnejException ex) {
-			
+			ex.printStackTrace();
+		}
+		System.out.println();
+		try {
+			Punkt p1 = new Punkt(5,5);
+			System.out.println(p1);
+			Transformacja tr2 = new ZlozenieTransformacji(3, "Skalowanie");
+			System.out.println(tr2);
+			Punkt p2 = tr2.transformuj(p1);
+			System.out.println(p2);
+			System.out.println("Transformacja odwrotna: ");
+			Transformacja trr2 = tr2.getTransformacjaOdwrotna();
+			Punkt p3 = trr2.transformuj(p2);
+			System.out.println(p3);
+		}
+		catch(BrakTransformacjiOdwrotnejException ex) {
+			ex.printStackTrace();
+		}
+		
+		System.out.println();
+		try {
+			Punkt p1 = new Punkt(5,5);
+			System.out.println(p1);
+			Transformacja tr2 = new ZlozenieTransformacji(3, "Translacja");
+			System.out.println(tr2);
+			Punkt p2 = tr2.transformuj(p1);
+			System.out.println(p2);
+			System.out.println("Transformacja odwrotna translacja: ");
+			Transformacja trr2 = tr2.getTransformacjaOdwrotna();
+			Punkt p3 = trr2.transformuj(p2);
+			System.out.println(p3);
+		}
+		catch(BrakTransformacjiOdwrotnejException ex) {
+			ex.printStackTrace();
 		}
 	}
 }
