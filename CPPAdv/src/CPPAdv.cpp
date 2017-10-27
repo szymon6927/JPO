@@ -1,17 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
+#include <array>
+
 using namespace std;
 class VektorNd {
 	double *_liczby; //pole ze wskaünikiem liczb
 	int _wymiar; //wymiar wektora
 public:
+	VektorNd() :
+			_wymiar(5), _liczby(new double[_wymiar]) {
+	}
+
 	VektorNd(const double liczby[], int wymiar) { //konstruktor
 		_liczby = new double[wymiar];
 		_wymiar = wymiar;
 		for (int i = 0; i < _wymiar; i++)
 			_liczby[i] = liczby[i];
 	}
+
 	VektorNd(const VektorNd& oryginal) { //konstruktor kopiujπcy
 		cout << "Wywoluje copy construcotr \n";
 		_liczby = new double[oryginal._wymiar];
@@ -19,10 +27,12 @@ public:
 		for (int i = 0; i < _wymiar; i++)
 			_liczby[i] = oryginal._liczby[i];
 	}
+
 	~VektorNd() {
 		cout << "VektorNd zwalniam pamiec pod adresem: " << this << endl;
 		delete[] _liczby;
 	}
+
 	VektorNd& operator=(const VektorNd& right) { //implementacja operatora przypisania
 		cout << "Operator = \n";
 		if (_wymiar != right._wymiar) { //gdy zgodne wymiary nie potrzeba realokowaÊ pamiÍci
@@ -34,7 +44,27 @@ public:
 			_liczby[i] = right._liczby[i];
 		return *this;
 	}
+
+	VektorNd(VektorNd&& inny) :
+			_wymiar(inny._wymiar), _liczby(inny._liczby) {
+		inny._liczby = nullptr;
+		inny._wymiar = 0;
+	}
+
+	VektorNd& operator=(VektorNd&& inny) {
+		std::swap(*this, inny);
+		return *this;
+	}
+
 	friend ostream& operator<<(ostream& left, VektorNd& right);
+
+	friend istream& operator>>(istream& left, VektorNd& right) {
+		for (int i = 0; i < right._wymiar; i++) {
+			left >> right._liczby[i];
+		}
+		return left;
+	}
+
 	void wypisz(ostream& out = cout) {
 		out << "|-------------------------BEGIN------------------------------|"
 				<< endl;
@@ -56,13 +86,13 @@ public:
 	double getCoef(int index) { //pomocznicza metoda
 		return _liczby[index];
 	}
-	int getDim() { //pomocznicza metoda
+	int getDim() { // pomocznicza metoda
 		return _wymiar;
 	}
 };
 
 ostream& operator<<(ostream& left, VektorNd& right) {
-	right.wypisz(left); //wolno wywo≥aÊ gdyø operator jest friend
+	right.wypisz(left); // wolno wywo≥aÊ gdyø operator jest friend
 	return left;
 }
 
@@ -72,94 +102,98 @@ void wypisz(double tab[], int rozmiar) {
 	cout << endl;
 }
 
-void wypiszV1(VektorNd v) {
-	cout << "|----------BEGIN------------------------------|" << endl;
-	cout << "Jestem wektorem pod adresem: " << &v << endl;
-	int wymiar = v.getDim();
-	cout << "MÛj wymiar to: " << wymiar << endl;
-	cout << "A elementy:" << endl;
-	for (int i = 0; i < wymiar; i++)
-		cout << "[" << i << "] = \t" << v.getCoef(i) << endl;
-	cout << "|-----------END-------------------------------|" << endl;
-}
-
-void wypiszV2(VektorNd& v) {
-	cout << "|----------BEGIN------------------------------|" << endl;
-	cout << "Jestem wektorem pod adresem: " << &v << endl;
-	int wymiar = v.getDim();
-	cout << "MÛj wymiar to: " << wymiar << endl;
-	cout << "A elementy:" << endl;
-	for (int i = 0; i < wymiar; i++)
-		cout << "[" << i << "] = \t" << v.getCoef(i) << endl;
-	cout << "|-----------END-------------------------------|" << endl;
-}
-
-class VectorOfVectors {
+class VectorOfVectorsBezPointer {
 private:
-	vector<VektorNd> vec;
+	array<VektorNd, 3> arr;
 public:
-	VectorOfVectors() { // konstruktor
-		cout << "VectorOfVectors constructor \n";
-	}
-	~VectorOfVectors() {
-		cout << "Destroy VectorOfVectors \n";
-		vec.clear();
-	}
-//	friend ostream& operator<<();
-	void add(const double wartosci[], int ilosc) {
-		cout << "ADD! \n";
-		vec.push_back(VektorNd(wartosci, ilosc));
-	}
-	void setValue(double wartosc, int whichVecotor, int index) {
-		vec[whichVecotor].setCoef(wartosc, index);
-	}
-	void printAll() {
-		cout << "Print all: ! \n";
-		for(unsigned i=0; i<vec.size();i++) {
-			vec[i].wypisz();
+	friend std::ostream& operator<<(std::ostream& out,
+			const VectorOfVectorsBezPointer& v) {
+		for (unsigned i = 0; i < v.arr.size(); i++) {
+			out << v.arr[i] << '\n';
 		}
+		return out;
 	}
-//	void print(ostream& out = cout) {
-//		out << "|------------------VectorOfVectors << ------------------------| \n";
-//		out << *this;
-//	}
+
+	friend std::istream& operator>>(std::istream& in,
+			VectorOfVectorsBezPointer& vec) {
+		for (unsigned i = 0; i < vec.arr.size(); i++) {
+			in >> vec.arr[i] << '\n';
+		}
+		return in;
+	}
 };
 
+class VectorOfVectorsPointery {
+private:
+	int size;
+	VektorNd* vektory;
+public:
+	VectorOfVectorsPointery() :
+			size(0), vektory(nullptr) {
+
+	}
+
+	VectorOfVectorsPointery(int size) :
+			size(size), vektory(new VektorNd[size]) {
+
+	}
+
+	VectorOfVectorsPointery(const VectorOfVectorsPointery& other) : size(other.size), vektory(new VectorNd[size])
+	{
+		std::copy(other.vektory, other.vektory + size, vektory);
+	}
+
+	VectorOfVectorsPointery& operator=(const VectorOfVectorsPointery& inny) {
+		VectorOfVectorsPointery temp(inny);
+		std::swap(*this, temp);
+		return *this;
+	}
+
+	VectorOfVectorsPointery(VectorOfVectorsPointery&& inny) :
+			size(inny.size), vektory(inny.vektory) {
+		inny.vektory = nullptr;
+		inny.size = 0;
+	}
+
+	VectorOfVectorsPointery& operator=(VectorOfVectorsPointery&& inny) {
+		std::swap(*this, inny);
+		return *this;
+	}
+
+	~VectorOfVectorsPointery() {
+		delete[] vektory;
+	}
+
+	friend std::ostream& operator<<(std::ostream& out,
+			const VectorOfVectorsPointery& vec) {
+
+		for (int i = 0; i < vec.size; ++i) {
+			out << vec.vektory[i] << '\n';
+		}
+
+		return out;
+	}
+
+	friend std::istream& operator>>(std::istream& in, VectorOfVectorsPointery& vec) {
+		for (int i = 0; i < vec.size; ++i) {
+			in >> vec.vektory[i];
+		}
+
+		return in;
+	}
+};
 
 int main() {
-	const double wartosci1[] = { 1, 2, 3 };
-	const double wartosci2[] = { 4, 5, 6 };
-	const double wartosci3[] = { 7, 8, 9 };
+//	const double wartosci1[] = { 1, 2, 3 };
+//	const double wartosci2[] = { 4, 5, 6 };
+//	const double wartosci3[] = { 7, 8, 9 };
+//
+//	const double wartosci11[] = { 11, 22, 33 };
+//	const double wartosci22[] = { 44, 55, 66 };
+//	const double wartosci33[] = { 77, 88, 99 };
 
-	const double wartosci11[] = { 11, 22, 33 };
-	const double wartosci22[] = { 44, 55, 66 };
-	const double wartosci33[] = { 77, 88, 99 };
-
-	VectorOfVectors vv1;
-	vv1.add(wartosci1, 3);
-	vv1.add(wartosci2, 3);
-	vv1.add(wartosci3, 3);
-	vv1.printAll();
-
-	VectorOfVectors vv2;
-	vv2.add(wartosci11, 3);
-	vv2.add(wartosci22, 3);
-	vv2.add(wartosci33, 3);
-	vv2.printAll();
-
-	vv1 = vv2;
-//	cout << "\n\n VV1 po zamianie z VV2 \n\n";
-//	vv1.printAll();
-
-	vv1.setValue(100.0, 0, 0); // wartosc 100.00 na 0 wektorze w VectorsOfVecotr, na indexie 0
-	vv2.setValue(110.0, 0, 0);
-
-	cout << "\n\n";
-	vv1.printAll();
-	cout << "\n\n vv2 \n\n";
-	vv2.printAll();
-
-//	cout << vv1;
+	VectorOfVectorsBezPointer v(3);
+	std::cout << v;
 
 //	VektorNd v1(wartosci, 3);
 //	ofstream file("E:\\plik.txt");
