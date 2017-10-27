@@ -1,7 +1,7 @@
 package pl.edu.pg.eti.ksg.po.lab2.biegpolesie;
 
-public class Terminator extends Robot {
-	public Terminator(int id) {
+public class TerminatorL extends Terminator {
+	public TerminatorL(int id) {
 		super(id);
 	}
 

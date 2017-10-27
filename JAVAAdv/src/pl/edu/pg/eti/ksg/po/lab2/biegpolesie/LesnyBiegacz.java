@@ -1,8 +1,8 @@
 package pl.edu.pg.eti.ksg.po.lab2.biegpolesie;
 
-public class Terminator extends Robot {
-	public Terminator(int id) {
-		super(id);
+public class LesnyBiegacz extends Czlowiek {
+	public LesnyBiegacz(String name, String lastName, Czlowiek.Plec plec) {
+		super(name, lastName, plec);
 	}
 
 	@Override
