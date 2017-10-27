@@ -6,8 +6,8 @@
 
 using namespace std;
 class VektorNd {
-	double *_liczby; //pole ze wskaünikiem liczb
 	int _wymiar; //wymiar wektora
+	double *_liczby; //pole ze wskaünikiem liczb
 public:
 	VektorNd() :
 			_wymiar(5), _liczby(new double[_wymiar]) {
@@ -56,7 +56,7 @@ public:
 		return *this;
 	}
 
-	friend ostream& operator<<(ostream& left, VektorNd& right);
+	friend ostream& operator<<(ostream& left, const VektorNd& right);
 
 	friend istream& operator>>(istream& left, VektorNd& right) {
 		for (int i = 0; i < right._wymiar; i++) {
@@ -65,7 +65,7 @@ public:
 		return left;
 	}
 
-	void wypisz(ostream& out = cout) {
+	void wypisz(ostream& out = cout) const {
 		out << "|-------------------------BEGIN------------------------------|"
 				<< endl;
 		out << "Jestem wektorem pod adresem: " << this << endl;
@@ -91,7 +91,7 @@ public:
 	}
 };
 
-ostream& operator<<(ostream& left, VektorNd& right) {
+ostream& operator<<(ostream& left, const VektorNd& right) {
 	right.wypisz(left); // wolno wywo≥aÊ gdyø operator jest friend
 	return left;
 }
@@ -117,7 +117,7 @@ public:
 	friend std::istream& operator>>(std::istream& in,
 			VectorOfVectorsBezPointer& vec) {
 		for (unsigned i = 0; i < vec.arr.size(); i++) {
-			in >> vec.arr[i] << '\n';
+			in >> vec.arr[i];
 		}
 		return in;
 	}
@@ -129,8 +129,7 @@ private:
 	VektorNd* vektory;
 public:
 	VectorOfVectorsPointery() :
-			size(0), vektory(nullptr) {
-
+		size(0), vektory(nullptr) {
 	}
 
 	VectorOfVectorsPointery(int size) :
@@ -138,8 +137,8 @@ public:
 
 	}
 
-	VectorOfVectorsPointery(const VectorOfVectorsPointery& other) : size(other.size), vektory(new VectorNd[size])
-	{
+	VectorOfVectorsPointery(const VectorOfVectorsPointery& other) :
+			size(other.size), vektory(new VektorNd[size]) {
 		std::copy(other.vektory, other.vektory + size, vektory);
 	}
 
@@ -174,7 +173,8 @@ public:
 		return out;
 	}
 
-	friend std::istream& operator>>(std::istream& in, VectorOfVectorsPointery& vec) {
+	friend std::istream& operator>>(std::istream& in,
+			VectorOfVectorsPointery& vec) {
 		for (int i = 0; i < vec.size; ++i) {
 			in >> vec.vektory[i];
 		}
@@ -192,7 +192,8 @@ int main() {
 //	const double wartosci22[] = { 44, 55, 66 };
 //	const double wartosci33[] = { 77, 88, 99 };
 
-	VectorOfVectorsBezPointer v(3);
+	VectorOfVectorsPointery v(3);
+	std::cin >> v;
 	std::cout << v;
 
 //	VektorNd v1(wartosci, 3);
