@@ -57,7 +57,6 @@ protected:
 	Organizm*** naMapie;
 	swiat::Swiat* world;
 	char** symbolNaMapie;
-
 };
 }
 
