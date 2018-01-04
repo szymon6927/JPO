@@ -20,7 +20,7 @@ public:
 	void rozmnazanie(organizm::Organizm* partner);
 	void akcja();
 private:
-	int poprzedniWiek;
+	int iloscRuchow;
 };
 }
 
