@@ -4,6 +4,7 @@
  *  Created on: 28.12.2017
  *      Author: Szymon
  */
+
 #include "Organizm.h"
 
 #ifndef ZWIERZE_H_
