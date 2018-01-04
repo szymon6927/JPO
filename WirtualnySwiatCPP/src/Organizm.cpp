@@ -11,9 +11,7 @@ namespace organizm {
 
 Organizm::Organizm() {
 	wiek = 0;
-	ogluszenie = 0;
 	alive = true;
-	zolwniety = false;
 }
 
 Organizm::~Organizm() {
@@ -46,6 +44,10 @@ void Organizm::setSwiat(swiat::Swiat & world) {
 	this->symbolNaMapie = world.mapa;
 }
 
+void Organizm::setSila(int oIle) {
+	sila = sila + oIle;
+}
+
 void Organizm::rysowanie() {
 	symbolNaMapie[x][y] = symbol;
 }
@@ -66,24 +68,8 @@ char Organizm::getSymbol() {
 	return symbol;
 }
 
-int Organizm::getOgluszenie() {
-	return ogluszenie;
-}
-
-void Organizm::setOgluszenie() {
-	this->ogluszenie += 2;
-}
-
-void Organizm::setZolwniety(bool zolw) {
-	this->zolwniety = true;
-}
-
-void Organizm::setOgluszenie(int ogluszenie) {
-	this->ogluszenie = ogluszenie;
-}
-
 void Organizm::setWiek(int wiek) {
-	this->wiek = wiek;
+    this->wiek = wiek;
 }
 
 }
