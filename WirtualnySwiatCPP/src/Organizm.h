@@ -27,18 +27,15 @@ public:
 	virtual void rozmnazanie(Organizm* partner)=0;
 	virtual void rozmnazanie(int newX, int newY)=0;
 	bool isAlive();
-	void setZolwniety(bool zolw);
 	void setAlive(bool alive);
 	int getInicjatywa();
 	int getWiek();
 	int getSila();
 	char getSymbol();
 	void setWiek();
-	void setOgluszenie();
-	void setOgluszenie(int ogluszenie);
 	void setWiek(int wiek);
-	int getOgluszenie();
 	void setSwiat(swiat::Swiat & world);
+	void setSila(int oIle);
 	virtual ~Organizm();
 	int getX();
 	int getY();
@@ -52,8 +49,6 @@ protected:
 	int wiek;
 	char symbol;
 	bool alive;
-	bool zolwniety;
-	int ogluszenie;
 	Organizm*** naMapie;
 	swiat::Swiat* world;
 	char** symbolNaMapie;
