@@ -19,7 +19,7 @@ Wilk::Wilk(int x, int y) {
 }
 
 Wilk::~Wilk() {
-	world->logger.push_back("Wilk pad³!");
+	world->logger.push_back("Wilk padl!");
 }
 
 void Wilk::rozmnazanie(organizm::Organizm* partner) {
