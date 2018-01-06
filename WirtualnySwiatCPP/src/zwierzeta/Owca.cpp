@@ -19,7 +19,7 @@ Owca::Owca(int x, int y) {
 }
 
 Owca::~Owca() {
-    world->logger.push_back("Owca pad³a!");
+    world->logger.push_back("Owca umiera!");
 }
 
 void Owca::rozmnazanie(organizm::Organizm* partner) {
