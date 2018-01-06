@@ -17,7 +17,7 @@ Ciern::Ciern(int x, int y) {
 }
 
 Ciern::~Ciern() {
-    world->logger.push_back("Cierñ zjedzony");
+    world->logger.push_back("Ciern zjedzony");
 }
 
 void Ciern::akcja() {
@@ -55,7 +55,7 @@ void Ciern::rozmnazanie(int newX, int newY) {
     naMapie[newX][newY] = new Ciern(newX, newY);
     naMapie[newX][newY]->setSwiat(*world);
     world->organizmy.push_back(naMapie[newX][newY]);
-    world->logger.push_back("Narodziny Ciernia - (rozmnazanie)");
+    world->logger.push_back("Ciern narodziny (rozmnozenie)");
 
 }
 
