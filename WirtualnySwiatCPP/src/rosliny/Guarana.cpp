@@ -32,13 +32,15 @@ void Guarana::kolizja(organizm::Organizm* oponent) {
 	std::string komunikat;
 	if (sila > tmp_sila) {
 		oponent->setAlive(false);
-		world->logger.push_back("Guarana wygrala pojedynek z: ");
+		komunikat = "Guarana wygrala pojedynek z: ";
+		world->logger.push_back(komunikat += oponent->getSymbol());
 	}
 	else if (sila < tmp_sila) {
 		setAlive(false);
 		// po jej zjedzeniu zwieksza sile oponeta o 3
 		oponent->setSila(3);
-		world->logger.push_back("Guarana zwiekszyla sile o 3 dla: ");
+		komunikat = "Guarana zwiekszyla sile o 3 dla: ";
+		world->logger.push_back(komunikat += oponent->getSymbol());
 	}
 }
 
