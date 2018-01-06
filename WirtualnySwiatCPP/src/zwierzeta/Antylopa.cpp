@@ -31,7 +31,7 @@ void Antylopa::akcja() {
 	int tmp_x = x;
 	int tmp_y = y;
 
-	if ((kierunek == 0) && (y > 1)) {
+	if ((kierunek == 0) && (y > 2)) {
 		//ruch w gore o 2
 		tmp_y -= 2;
 	}
@@ -43,7 +43,7 @@ void Antylopa::akcja() {
 		//ruch w dol o 2
 		tmp_y += 2;
 	}
-	else if ((kierunek == 3) && (x > 1)) {
+	else if ((kierunek == 3) && (x > 2)) {
 		//ruch w lewo o 2
 		tmp_x -= 2;
 	}
@@ -75,25 +75,29 @@ void Antylopa::akcja() {
 }
 
 void Antylopa::kolizja(organizm::Organizm* oponent) {
-	int szansaUcieczki = rand() % 100;
-	if (szansaUcieczki < 50) {
-		world->logger.push_back("Antylopa ucieka");
+	int szansaUcieczki = rand() % 2; // daje mi 0 albo 1
+	std::string komunikat;
+	if (szansaUcieczki==0) {
+		komunikat = "Antylopa ucieka w walce z: ";
+		world->logger.push_back(komunikat += oponent->getSymbol());
 		this->akcja();
 	}
 	else {
 		int tmp_sila = oponent->getSila();
 		if (sila > tmp_sila) {
 			oponent->setAlive(false);
-			world->logger.push_back("Antylopa wygrywa z: ");
+			komunikat = "Antylopa wygrywa z: ";
+			world->logger.push_back(komunikat += oponent->getSymbol());
 		}
 		else if (sila < tmp_sila) {
 			setAlive(false);
-
-			world->logger.push_back("Antylopa przegrywa z: ");
+			komunikat = "Antylopa przegrywa z: ";
+			world->logger.push_back(komunikat += oponent->getSymbol());
 		}
 		else if (alive) {
 			setAlive(false);
-			world->logger.push_back("Antylopa przegrywa bo pierwszy zaatakowal: ");
+			komunikat = "Antylopa przegrywa bo pierwszy zaatakowal: ";
+			world->logger.push_back(komunikat += oponent->getSymbol());
 		}
 	}
 }
