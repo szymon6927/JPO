@@ -29,13 +29,12 @@ void Hipopotam::rozmnazanie(Organizm* partner) {
 		int j = 0;
 		bool miejsceWgospodzie = false;
 
-		int nx[] = {    x,     x, x + 1, x - 1,     tx,     tx, tx + 1, tx - 1};
-		int ny[] = {y + 1, y - 1,     y,     y, ty + 1, ty - 1,     ty,     ty};
+		int nx[] = { x, x, x + 1, x - 1, tx, tx, tx + 1, tx - 1 };
+		int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
-		for ( ;j < 8; j++ ) {
-			if (nx[j] >= 0 && nx[j] < 20 &&
-				ny[j] >= 0 && ny[j] < 20 &&
-				naMapie[nx[j]][ny[j]] == NULL) {
+		for (; j < 8; j++) {
+			if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
+					&& naMapie[nx[j]][ny[j]] == nullptr) {
 				miejsceWgospodzie = true;
 				break;
 			}
@@ -45,12 +44,11 @@ void Hipopotam::rozmnazanie(Organizm* partner) {
 			naMapie[nx[j]][ny[j]] = new Hipopotam(nx[j], ny[j]);
 			naMapie[nx[j]][ny[j]]->setSwiat(*world);
 			world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-			world->logger.push_back("Narodziny Hipopotama - najwiekszego kozaka w wirtualnym Swiecie!");
+			world->logger.push_back(
+					"Narodziny Hipopotama - najwiekszego kozaka w wirtualnym Swiecie!");
 		}
 	}
 }
 
 }
-
-
 
