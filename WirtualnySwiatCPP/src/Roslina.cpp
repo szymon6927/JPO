@@ -22,7 +22,7 @@ void Roslina::akcja() {
 	//zwykle poruszanie sie
 	int wylosowaneRozplenianie = rand() % 99;
 
-	if (wylosowaneRozplenianie < 25) {
+	if (wylosowaneRozplenianie < 10) {
 
 		int kierunek = rand() % 4;
 		const int wymiar = 20;
