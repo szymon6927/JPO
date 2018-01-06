@@ -38,7 +38,7 @@ void Organizm::setWiek() {
 	this->wiek += 1;
 }
 
-void Organizm::setSwiat(swiat::Swiat & world) {
+void Organizm::setSwiat(swiat::Swiat& world) {
 	this->world = &world;
 	this->naMapie = world.mapaOrganizmow;
 	this->symbolNaMapie = world.mapa;
