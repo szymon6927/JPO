@@ -28,7 +28,8 @@ public:
 	void wykonajTure();
 	void rysujSwiat();
 	void utworzSwiat();
-	std::string zachowajSwiat();
+	std::string zachowajSwiat() const;
+	void inputParser(int argc, char** argv);
 	Swiat();
 	~Swiat();
 };

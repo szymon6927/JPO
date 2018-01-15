@@ -9,8 +9,9 @@
 
 namespace zwierze {
 
-Zwierze::Zwierze(Swiat& swiat, int sila, int inicjatywa, int x, int y) : Organizm(swiat, sila, inicjatywa,x, y)
-{}
+Zwierze::Zwierze(Swiat& swiat, int sila, int inicjatywa, int x, int y) :
+		Organizm(swiat, sila, inicjatywa, x, y) {
+}
 
 void Zwierze::akcja() {
 	//zwykle poruszanie sie

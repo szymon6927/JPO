@@ -1,10 +1,26 @@
 /*
  * Swiat.cpp
+
  *
  *  Created on: 28.12.2017
  *      Author: Szymon
  */
+#include <fstream>
+#include <cassert>
+#include <cstring>
+
 #include "Swiat.h"
+#include "Organizm.h"
+//rosliny
+#include "rosliny/Ciern.h"
+#include "rosliny/Trawa.h"
+#include "rosliny/Guarana.h"
+////zwierzeta
+#include "zwierzeta/Wilk.h"
+#include "zwierzeta/Owca.h"
+#include "zwierzeta/Antylopa.h"
+#include "zwierzeta/Leniwiec.h"
+#include "zwierzeta/Hipopotam.h"
 
 Swiat::Swiat() {
 
@@ -104,7 +120,7 @@ void Swiat::wykonajTure() {
 	std::sort(organizmy.begin(), organizmy.end(), sortowanie);
 }
 
-std::string Swiat::zachowajSwiat() {
+std::string Swiat::zachowajSwiat() const {
 
 	std::string str;
 	for (unsigned i = 0; i < organizmy.size(); i++) {
@@ -168,5 +184,146 @@ Swiat::~Swiat() {
 	}
 
 	logger.clear();
+}
+
+void Swiat::inputParser(int argc, char** argv) {
+
+	std::vector<std::string> organizmy;
+
+	for (int i = 1; i < argc; i++) {
+
+		if (std::strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
+
+			std::string linia;
+			std::ifstream plik(argv[i + 1]);
+			if (plik.is_open()) {
+				while (plik >> linia) {
+					organizmy.push_back(std::move(linia));
+				}
+
+				break;
+			}
+		} else if (std::strcmp(argv[i], "-f") == 0 && i == argc - 1) {
+			std::cout << "Brak podanego pliku" << std::endl;
+			break;
+		} else {
+			std::string str(argv[i]);
+			organizmy.push_back(str);
+		}
+
+	}
+
+	if (organizmy.empty()) {
+		std::cout << "Brak organizmow" << std::endl;
+		std::exit(EXIT_FAILURE);
+	}
+// -----------------------
+	const char* znak;
+	for (unsigned int i = 0; i < organizmy.size(); i++) {
+
+		znak = organizmy[i].c_str();
+		char zwierzak = 0;
+		int x = -1;
+		int y = -1;
+		int w = 0;
+
+		while (*znak != 0) {
+			switch (*znak) {
+			case 'W':
+				zwierzak = 'W';
+				break;
+			case 'O':
+				zwierzak = 'O';
+				break;
+			case 'L':
+				zwierzak = 'L';
+				break;
+			case 'A':
+				zwierzak = 'A';
+				break;
+			case 'H':
+				zwierzak = 'H';
+				break;
+			case 'c':
+				zwierzak = 'c';
+				break;
+			case 'g':
+				zwierzak = 'g';
+				break;
+			case 't':
+				zwierzak = 't';
+				break;
+			case 'x':
+				x = std::atoi(znak + 1);
+				break;
+			case 'y':
+				y = std::atoi(znak + 1);
+				break;
+			case 'w': //wiek zwierzecia
+				w = std::atoi(znak + 1);
+				break;
+			default:
+				try {
+					if (!isdigit(*znak)) {
+						throw *znak;
+					}
+				} catch (char e) {
+					std::cout << "Niepoprawny znak: " << e << std::endl;
+					std::cout << "Dopuszczalne znaki:" << std::endl;
+					std::cout << "W - wilk; O - Owca; H - hipopotam" << std::endl;
+					std::cout << "A - antylopa; L - Leniwiec" << std::endl;
+					std::cout << "g - guarana; c - ciern; t - trawa"
+							<< std::endl;
+					std::cout << "x - polozenie w osi X; y - polozenie w osi Y"
+							<< std::endl;
+					std::cout << "w - wiek organizmu" << std::endl;
+					std::cout << "Przykladowa konstrukcja: Hx2y0w5 Wx13y7"
+							<< std::endl;
+					exit(EXIT_FAILURE);
+				}
+				break;
+			}
+			znak++;
+		}
+		assert(x >= 0);
+		assert(y >= 0);
+		assert(x < 20);
+		assert(y < 20);
+		assert(zwierzak != 0);
+		//sprawdzanie, czy mapaOrganizmow[x][y] == NULL
+		if (mapaOrganizmow[x][y] == nullptr) {
+			switch (zwierzak) {
+			case 'W':
+				mapaOrganizmow[x][y] = new zwierze::Wilk(*this ,x, y);
+				break;
+			case 'L':
+				mapaOrganizmow[x][y] = new zwierze::Leniwiec(*this , x, y);
+				break;
+			case 'A':
+				mapaOrganizmow[x][y] = new zwierze::Antylopa(*this , x, y);
+				break;
+			case 'O':
+				mapaOrganizmow[x][y] = new zwierze::Owca(*this , x, y);
+				break;
+			case 'H':
+				mapaOrganizmow[x][y] = new zwierze::Hipopotam(*this , x, y);
+				break;
+			case 'c':
+				mapaOrganizmow[x][y] = new roslina::Ciern(*this , x, y);
+				break;
+			case 'g':
+				mapaOrganizmow[x][y] = new roslina::Guarana(*this , x, y);
+				break;
+			case 't':
+				mapaOrganizmow[x][y] = new roslina::Trawa(*this , x, y);
+				break;
+			}
+			//podstawowe parametry przy wczytywaniu
+			this->organizmy.push_back(mapaOrganizmow[x][y]);
+			mapaOrganizmow[x][y]->setWiek(w);
+		} else {
+			std::cout << "Pole zajete" << std::endl;
+		}
+	}
 }
 
