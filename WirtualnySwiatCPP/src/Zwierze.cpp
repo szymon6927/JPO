@@ -46,12 +46,12 @@ void Zwierze::akcja() {
 	} else if (naMapie[tmp_x][tmp_y] != &*this) {
 		naMapie[tmp_x][tmp_y]->kolizja(&*this);
 		kolizja(naMapie[tmp_x][tmp_y]);
-		if (isAlive()) {
+		if (czyZywy()) {
 			naMapie[tmp_x][tmp_y] = naMapie[x][y];
 			naMapie[x][y] = nullptr;
 			x = tmp_x;
 			y = tmp_y;
-		} else if (!isAlive()) {
+		} else if (!czyZywy()) {
 			naMapie[x][y] = nullptr;
 		}
 	}

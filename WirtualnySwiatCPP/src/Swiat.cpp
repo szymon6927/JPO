@@ -6,8 +6,6 @@
  */
 #include "Swiat.h"
 
-namespace swiat {
-
 Swiat::Swiat() {
 
 	mapaOrganizmow = new organizm::Organizm**[20];
@@ -41,12 +39,12 @@ bool Swiat::sortowanie(organizm::Organizm* i, organizm::Organizm* j) {
 }
 
 bool Swiat::sortowanieZywych(organizm::Organizm* i, organizm::Organizm* j) {
-	return (i->isAlive() > j->isAlive());
+	return (i->czyZywy() > j->czyZywy());
 }
 
 void Swiat::rysujSwiat() {
 
-//	std::system("clear");
+	std::system("clear");
 
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 20; j++) {
@@ -57,7 +55,6 @@ void Swiat::rysujSwiat() {
 	int size = organizmy.size();
 
 	for (int i = 0; i < size; i++) {
-
 		organizmy[i]->rysowanie();
 	}
 
@@ -72,10 +69,10 @@ void Swiat::rysujSwiat() {
 	}
 	logger.clear();
 	std::cout << std::endl << std::endl;
-	std::cout << "Szymon 166249" << std::endl;
-	std::cout << "save - zapisuje œwiat do wskazanego pliku" << std::endl;
+	std::cout << "Szymon Miks 166249" << std::endl;
+	std::cout << "save - zapisuje swiat do wskazanego pliku" << std::endl;
 	std::cout << "exit - opuszcza program" << std::endl;
-	std::cout << "Ka¿dy inny tekst bêdzie kontynuowaæ program" << std::endl;
+	std::cout << "Kazdy inny tekst bedzie kontynuowac program" << std::endl;
 }
 
 void Swiat::wykonajTure() {
@@ -88,7 +85,7 @@ void Swiat::wykonajTure() {
 
 	for (int i = 0; i < ilosc; i++) {
 
-		if (organizmy[i]->isAlive()) {
+		if (organizmy[i]->czyZywy()) {
 			organizmy[i]->akcja();
 		}
 	}
@@ -96,7 +93,7 @@ void Swiat::wykonajTure() {
 	std::sort(organizmy.begin(), organizmy.end(), sortowanieZywych);
 
 	for (int i = ilosc - 1; i >= 0; i--) {
-		if (!organizmy[i]->isAlive()) {
+		if (!organizmy[i]->czyZywy()) {
 			delete organizmy[i];
 			organizmy.erase(organizmy.begin() + i);
 		} else {
@@ -171,7 +168,5 @@ Swiat::~Swiat() {
 	}
 
 	logger.clear();
-}
-
 }
 

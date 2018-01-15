@@ -15,8 +15,6 @@
 #ifndef SWIAT_H_
 #define SWIAT_H_
 
-namespace swiat {
-
 class Swiat {
 private:
 	static bool sortowanie(organizm::Organizm* i, organizm::Organizm* j);
@@ -34,6 +32,5 @@ public:
 	Swiat();
 	~Swiat();
 };
-}
 
 #endif /* SWIAT_H_ */

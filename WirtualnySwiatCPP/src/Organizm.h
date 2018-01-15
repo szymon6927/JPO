@@ -12,9 +12,7 @@
 #ifndef ORGANIZM_H_
 #define ORGANIZM_H_
 
-namespace swiat {
 class Swiat;
-}
 
 namespace organizm {
 
@@ -23,22 +21,22 @@ class Organizm {
 public:
 	virtual void akcja()=0;
 	virtual void kolizja(Organizm* oponent)=0;
-	virtual void rysowanie();
+	virtual void rysowanie() const;
 	virtual void rozmnazanie(Organizm* partner)=0;
 	virtual void rozmnazanie(int newX, int newY)=0;
-	bool isAlive();
+	bool czyZywy() const;
 	void setAlive(bool alive);
-	int getInicjatywa();
-	int getWiek();
-	int getSila();
-	char getSymbol();
+	int getInicjatywa() const;
+	int getWiek() const;
+	int getSila() const;
+	char getSymbol() const;
 	void setWiek();
 	void setWiek(int wiek);
-	void setSwiat(swiat::Swiat & world);
+	void setSwiat(Swiat & world);
 	void setSila(int oIle);
-	virtual ~Organizm();
-	int getX();
-	int getY();
+	virtual ~Organizm() = default;
+	int getX() const;
+	int getY() const;
 	Organizm();
 
 protected:
@@ -50,7 +48,7 @@ protected:
 	char symbol;
 	bool alive;
 	Organizm*** naMapie;
-	swiat::Swiat* world;
+	Swiat* world;
 	char** symbolNaMapie;
 };
 }

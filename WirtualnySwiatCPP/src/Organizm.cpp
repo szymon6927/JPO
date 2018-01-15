@@ -14,11 +14,7 @@ Organizm::Organizm() {
 	alive = true;
 }
 
-Organizm::~Organizm() {
-
-}
-
-bool Organizm::isAlive() {
+bool Organizm::czyZywy() const {
 	return alive;
 }
 
@@ -26,11 +22,11 @@ void Organizm::setAlive(bool alive) {
 	this->alive = alive;
 }
 
-int Organizm::getInicjatywa() {
+int Organizm::getInicjatywa() const {
 	return inicjatywa;
 }
 
-int Organizm::getWiek() {
+int Organizm::getWiek() const {
 	return wiek;
 }
 
@@ -38,7 +34,7 @@ void Organizm::setWiek() {
 	this->wiek += 1;
 }
 
-void Organizm::setSwiat(swiat::Swiat& world) {
+void Organizm::setSwiat(Swiat& world) {
 	this->world = &world;
 	this->naMapie = world.mapaOrganizmow;
 	this->symbolNaMapie = world.mapa;
@@ -48,23 +44,23 @@ void Organizm::setSila(int oIle) {
 	sila = sila + oIle;
 }
 
-void Organizm::rysowanie() {
+void Organizm::rysowanie() const {
 	symbolNaMapie[x][y] = symbol;
 }
 
-int Organizm::getX() {
+int Organizm::getX() const {
 	return x;
 }
 
-int Organizm::getY() {
+int Organizm::getY() const {
 	return y;
 }
 
-int Organizm::getSila() {
+int Organizm::getSila() const {
 	return sila;
 }
 
-char Organizm::getSymbol() {
+char Organizm::getSymbol() const {
 	return symbol;
 }
 

@@ -10,7 +10,7 @@
 #include <fstream>
 #include <ctime>
 #include <cstring>
-#include <assert.h>
+#include <cassert>
 //swiat
 #include "Organizm.h"
 #include "Swiat.h"
@@ -24,8 +24,6 @@
 #include "zwierzeta/Antylopa.h"
 #include "zwierzeta/Leniwiec.h"
 #include "zwierzeta/Hipopotam.h"
-
-using namespace swiat;
 
 void inputParser(Swiat& zaWarudo, int ilosc, char** args);
 
@@ -53,12 +51,12 @@ int main(int argc, char** argv) {
 				if (plik.is_open()) {
 					plik << zaWarudo.zachowajSwiat();
 				} else {
-					throw 45;
+					throw std::runtime_error("nie moge otworzyc tego pliku");
 				}
-			} catch (int e) {
-				std::cout << "B³¹d " << e;
-				std::cout << " - nieprawid³owy plik" << std::endl;
-				std::cout << "U¿ywam domyœlnego" << std::endl;
+			} catch (std::exception const& e) {
+				std::cout << "Blad " << e.what();
+				std::cout << " - nieprawidlowy plik" << std::endl;
+				std::cout << "Uzywam domyslnego (save.txt)" << std::endl;
 				std::ofstream plik("save.txt");
 				plik << zaWarudo.zachowajSwiat();
 			}
@@ -74,8 +72,6 @@ int main(int argc, char** argv) {
 }
 
 void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
-
-	 std::cout<<"input parser\n";
 
 	std::vector<std::string> organizmy;
 
@@ -103,7 +99,7 @@ void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
 	}
 
 	if (organizmy.size() == 0) {
-		std::cout << "Brak organizmów" << std::endl;
+		std::cout << "Brak organizmow" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -148,7 +144,7 @@ void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
 			case 'y':
 				y = atoi(znak + 1);
 				break;
-			case 'w':
+			case 'w': //wiek zwierzecia
 				w = atoi(znak + 1);
 				break;
 			default:
@@ -161,16 +157,15 @@ void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
 					std::cout << "Dopuszczalne znaki:" << std::endl;
 					std::cout << "W - wilk; O - Owca; H - hipopotam" << std::endl;
 					std::cout << "A - antylopa; L - Leniwiec" << std::endl;
-					std::cout << "g - guarana; c - cierñ; t - trawa"
+					std::cout << "g - guarana; c - ciern; t - trawa"
 							<< std::endl;
 					std::cout << "x - polozenie w osi X; y - polozenie w osi Y"
 							<< std::endl;
 					std::cout << "w - wiek organizmu" << std::endl;
-					std::cout << "Przykladowa konstrukcja: Px2y0w5s0 Wx13y7"
+					std::cout << "Przykladowa konstrukcja: Hx2y0w5 Wx13y7"
 							<< std::endl;
 					exit(EXIT_FAILURE);
 				}
-				;
 				break;
 			}
 			znak++;
@@ -213,7 +208,7 @@ void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
 			zaWarudo.mapaOrganizmow[x][y]->setSwiat(zaWarudo);
 			zaWarudo.mapaOrganizmow[x][y]->setWiek(w);
 		} else {
-			std::cout << "Pole zajête" << std::endl;
+			std::cout << "Pole zajete" << std::endl;
 		}
 	}
 }
