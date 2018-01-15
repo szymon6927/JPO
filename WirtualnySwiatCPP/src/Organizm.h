@@ -24,33 +24,30 @@ public:
 	virtual void rysowanie() const;
 	virtual void rozmnazanie(Organizm* partner)=0;
 	virtual void rozmnazanie(int newX, int newY)=0;
+	virtual char getSymbol() const=0;
 	bool czyZywy() const;
 	void setAlive(bool alive);
 	int getInicjatywa() const;
 	int getWiek() const;
 	int getSila() const;
-	char getSymbol() const;
 	void setWiek();
 	void setWiek(int wiek);
-	void setSwiat(Swiat & world);
-	void setSila(int oIle);
-	virtual ~Organizm() = default;
+	void zwiekszSile(int oIle);
 	int getX() const;
 	int getY() const;
-	Organizm();
+
+	Organizm(Swiat& swiat, int sila, int inicjatywa, int x, int y);
+	virtual ~Organizm() = default;
 
 protected:
+	Swiat& swiat;
 	int sila;
 	int inicjatywa;
+	int wiek = 0;
+	bool alive = true;
 	int x;
 	int y;
-	int wiek;
-	char symbol;
-	bool alive;
-	Organizm*** naMapie;
-	Swiat* world;
-	char** symbolNaMapie;
 };
-}
+} // namespace organizm
 
 #endif /* ORGANIZM_H_ */

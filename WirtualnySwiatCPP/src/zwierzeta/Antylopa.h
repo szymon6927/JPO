@@ -13,12 +13,12 @@ namespace zwierze {
 
 class Antylopa: public Zwierze {
 public:
-	Antylopa(int x, int y);
-	~Antylopa();
-
+	Antylopa(Swiat& swiat, int x, int y);
+	virtual ~Antylopa();
 	void rozmnazanie(organizm::Organizm* partner);
 	void kolizja(organizm::Organizm* oponent);
 	void akcja();
+	char getSymbol() const override;
 };
 }
 

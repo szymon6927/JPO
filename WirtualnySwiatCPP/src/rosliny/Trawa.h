@@ -13,9 +13,10 @@ namespace roslina {
 
 class Trawa: public Roslina {
 public:
-	Trawa(int x, int y);
-	~Trawa();
+	Trawa(Swiat& swiat, int x, int y);
+	virtual ~Trawa();
 	void rozmnazanie(int newX, int newY);
+	char getSymbol() const override;
 };
 
 }

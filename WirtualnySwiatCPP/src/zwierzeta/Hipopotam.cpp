@@ -10,16 +10,12 @@
 
 namespace zwierze {
 
-Hipopotam::Hipopotam(int x, int y) {
-	this->x = x;
-	this->y = y;
-	inicjatywa = 50;
-	sila = 40;
-	symbol = 'H';
+Hipopotam::Hipopotam(Swiat& swiat, int x, int y) :
+		Zwierze(swiat, 40, 50, x, y) {
 }
 
 Hipopotam::~Hipopotam() {
-	world->logger.push_back("Najslinijeszy z zwierzat umiera !!! :(");
+	swiat.logger.push_back("Najslinijeszy z zwierzat umiera !!! :(");
 }
 
 void Hipopotam::rozmnazanie(Organizm* partner) {
@@ -34,20 +30,24 @@ void Hipopotam::rozmnazanie(Organizm* partner) {
 
 		for (; j < 8; j++) {
 			if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
-					&& naMapie[nx[j]][ny[j]] == nullptr) {
+					&& swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
 				miejsceWgospodzie = true;
 				break;
 			}
 		}
 
 		if (miejsceWgospodzie) {
-			naMapie[nx[j]][ny[j]] = new Hipopotam(nx[j], ny[j]);
-			naMapie[nx[j]][ny[j]]->setSwiat(*world);
-			world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-			world->logger.push_back(
+			swiat.mapaOrganizmow[nx[j]][ny[j]] = new Hipopotam(swiat, nx[j],
+					ny[j]);
+			swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+			swiat.logger.push_back(
 					"Narodziny Hipopotama - najwiekszego kozaka w wirtualnym Swiecie!");
 		}
 	}
+}
+
+char Hipopotam::getSymbol() const {
+	return 'H';
 }
 
 }

@@ -4,14 +4,13 @@
  *  Created on: 28.12.2017
  *      Author: Szymon
  */
-
+#include "Swiat.h"
 #include "Zwierze.h"
 
 namespace zwierze {
 
-Zwierze::~Zwierze() {
-
-}
+Zwierze::Zwierze(Swiat& swiat, int sila, int inicjatywa, int x, int y) : Organizm(swiat, sila, inicjatywa,x, y)
+{}
 
 void Zwierze::akcja() {
 	//zwykle poruszanie sie
@@ -35,24 +34,24 @@ void Zwierze::akcja() {
 		tmp_x -= 1;
 	}
 
-	if (naMapie[tmp_x][tmp_y] == nullptr) {
-		naMapie[tmp_x][tmp_y] = naMapie[x][y];
-		naMapie[x][y] = nullptr;
+	if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
+		swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+		swiat.mapaOrganizmow[x][y] = nullptr;
 		x = tmp_x;
 		y = tmp_y;
-	} else if (naMapie[tmp_x][tmp_y]->getSymbol() == symbol
-			&& naMapie[tmp_x][tmp_y] != &*this) {
-		rozmnazanie(naMapie[tmp_x][tmp_y]);
-	} else if (naMapie[tmp_x][tmp_y] != &*this) {
-		naMapie[tmp_x][tmp_y]->kolizja(&*this);
-		kolizja(naMapie[tmp_x][tmp_y]);
+	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol() == getSymbol()
+			&& swiat.mapaOrganizmow[tmp_x][tmp_y] != this) {
+		rozmnazanie(swiat.mapaOrganizmow[tmp_x][tmp_y]);
+	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y] != this) {
+		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(this);
+		kolizja(swiat.mapaOrganizmow[tmp_x][tmp_y]);
 		if (czyZywy()) {
-			naMapie[tmp_x][tmp_y] = naMapie[x][y];
-			naMapie[x][y] = nullptr;
+			swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+			swiat.mapaOrganizmow[x][y] = nullptr;
 			x = tmp_x;
 			y = tmp_y;
 		} else if (!czyZywy()) {
-			naMapie[x][y] = nullptr;
+			swiat.mapaOrganizmow[x][y] = nullptr;
 		}
 	}
 }

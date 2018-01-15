@@ -1,12 +1,3 @@
-//============================================================================
-// Name        : WirtualnySwiat.cpp
-// Author      : Szymon Miks
-// Version     :
-// Copyright   : 
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
-//#include <iostream>
 #include <fstream>
 #include <ctime>
 #include <cstring>
@@ -25,7 +16,7 @@
 #include "zwierzeta/Leniwiec.h"
 #include "zwierzeta/Hipopotam.h"
 
-void inputParser(Swiat& zaWarudo, int ilosc, char** args);
+void inputParser(Swiat& swiat, int ilosc, char** args);
 
 int main(int argc, char** argv) {
 
@@ -71,7 +62,7 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
+void inputParser(Swiat& swiat, int argc, char ** argv) {
 
 	std::vector<std::string> organizmy;
 
@@ -176,37 +167,36 @@ void inputParser(Swiat & zaWarudo, int argc, char ** argv) {
 		assert(y < 20);
 		assert(zwierzak != 0);
 		//sprawdzanie, czy mapaOrganizmow[x][y] == NULL
-		if (zaWarudo.mapaOrganizmow[x][y] == nullptr) {
+		if (swiat.mapaOrganizmow[x][y] == nullptr) {
 			switch (zwierzak) {
 			case 'W':
-				zaWarudo.mapaOrganizmow[x][y] = new zwierze::Wilk(x, y);
+				swiat.mapaOrganizmow[x][y] = new zwierze::Wilk(swiat ,x, y);
 				break;
 			case 'L':
-				zaWarudo.mapaOrganizmow[x][y] = new zwierze::Leniwiec(x, y);
+				swiat.mapaOrganizmow[x][y] = new zwierze::Leniwiec(swiat, x, y);
 				break;
 			case 'A':
-				zaWarudo.mapaOrganizmow[x][y] = new zwierze::Antylopa(x, y);
+				swiat.mapaOrganizmow[x][y] = new zwierze::Antylopa(swiat, x, y);
 				break;
 			case 'O':
-				zaWarudo.mapaOrganizmow[x][y] = new zwierze::Owca(x, y);
+				swiat.mapaOrganizmow[x][y] = new zwierze::Owca(swiat, x, y);
 				break;
 			case 'H':
-				zaWarudo.mapaOrganizmow[x][y] = new zwierze::Hipopotam(x, y);
+				swiat.mapaOrganizmow[x][y] = new zwierze::Hipopotam(swiat, x, y);
 				break;
 			case 'c':
-				zaWarudo.mapaOrganizmow[x][y] = new roslina::Ciern(x, y);
+				swiat.mapaOrganizmow[x][y] = new roslina::Ciern(swiat, x, y);
 				break;
 			case 'g':
-				zaWarudo.mapaOrganizmow[x][y] = new roslina::Guarana(x, y);
+				swiat.mapaOrganizmow[x][y] = new roslina::Guarana(swiat, x, y);
 				break;
 			case 't':
-				zaWarudo.mapaOrganizmow[x][y] = new roslina::Trawa(x, y);
+				swiat.mapaOrganizmow[x][y] = new roslina::Trawa(swiat, x, y);
 				break;
 			}
 			//podstawowe parametry przy wczytywaniu
-			zaWarudo.organizmy.push_back(zaWarudo.mapaOrganizmow[x][y]);
-			zaWarudo.mapaOrganizmow[x][y]->setSwiat(zaWarudo);
-			zaWarudo.mapaOrganizmow[x][y]->setWiek(w);
+			swiat.organizmy.push_back(swiat.mapaOrganizmow[x][y]);
+			swiat.mapaOrganizmow[x][y]->setWiek(w);
 		} else {
 			std::cout << "Pole zajete" << std::endl;
 		}

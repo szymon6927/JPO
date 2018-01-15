@@ -15,10 +15,10 @@ namespace zwierze {
 class Wilk: public Zwierze {
 
 public:
-	Wilk(int x, int y);
-	~Wilk();
+	Wilk(Swiat& swiat, int x, int y);
+	virtual ~Wilk();
 	void rozmnazanie(organizm::Organizm* partner);
-
+	char getSymbol() const override;
 };
 }
 

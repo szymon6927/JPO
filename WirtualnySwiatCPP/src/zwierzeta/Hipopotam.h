@@ -14,9 +14,10 @@ namespace zwierze {
 
 class Hipopotam: public Zwierze {
 public:
-	Hipopotam(int x, int y);
-	~Hipopotam();
+	Hipopotam(Swiat& swiat, int x, int y);
+	virtual ~Hipopotam();
 	void rozmnazanie(organizm::Organizm* partner);
+	char getSymbol() const override;
 };
 
 }

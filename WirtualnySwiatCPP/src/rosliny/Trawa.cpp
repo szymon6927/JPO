@@ -10,25 +10,23 @@
 
 namespace roslina {
 
-Trawa::Trawa(int x, int y) {
-	this->x = x;
-	this->y = y;
-	symbol = 't';
+Trawa::Trawa(Swiat& swiat, int x, int y) :
+		Roslina(swiat, 0, x, y) {
 }
 
 Trawa::~Trawa() {
-	world->logger.push_back("Trawa zjedzona");
+	swiat.logger.push_back("Trawa zjedzona");
 }
 
 void Trawa::rozmnazanie(int newX, int newY) {
-	naMapie[newX][newY] = new Trawa(newX, newY);
-	naMapie[newX][newY]->setSwiat(*world);
-	world->organizmy.push_back(naMapie[newX][newY]);
-	world->logger.push_back("Narodziny nudnej Trawy");
+	swiat.mapaOrganizmow[newX][newY] = new Trawa(swiat, newX, newY);
+	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY]);
+	swiat.logger.push_back("Narodziny nudnej Trawy");
+}
+
+char Trawa::getSymbol() const {
+	return 'g';
 }
 
 }
-
-
-
 

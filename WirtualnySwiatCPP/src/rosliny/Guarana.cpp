@@ -10,21 +10,18 @@
 
 namespace roslina {
 
-Guarana::Guarana(int x, int y) {
-	this->x = x;
-	this->y = y;
-	symbol = 'g';
+Guarana::Guarana(Swiat& swiat, int x, int y) :
+		Roslina(swiat, 0, x, y) {
 }
 
 Guarana::~Guarana() {
-	world->logger.push_back("Guarana zjedzona");
+	swiat.logger.push_back("Guarana zjedzona");
 }
 
 void Guarana::rozmnazanie(int newX, int newY) {
-	naMapie[newX][newY] = new Guarana(newX, newY);
-	naMapie[newX][newY]->setSwiat(*world);
-	world->organizmy.push_back(naMapie[newX][newY]);
-	world->logger.push_back("Narodziny-(rozmnozenie) Guarany");
+	swiat.mapaOrganizmow[newX][newY] = new Guarana(swiat, newX, newY);
+	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY]);
+	swiat.logger.push_back("Narodziny-(rozmnozenie) Guarany");
 }
 
 void Guarana::kolizja(organizm::Organizm* oponent) {
@@ -33,17 +30,19 @@ void Guarana::kolizja(organizm::Organizm* oponent) {
 	if (sila > tmp_sila) {
 		oponent->setAlive(false);
 		komunikat = "Guarana wygrala pojedynek z: ";
-		world->logger.push_back(komunikat += oponent->getSymbol());
-	}
-	else if (sila < tmp_sila) {
+		swiat.logger.push_back(komunikat += oponent->getSymbol());
+	} else if (sila < tmp_sila) {
 		setAlive(false);
 		// po jej zjedzeniu zwieksza sile oponeta o 3
-		oponent->setSila(3);
+		oponent->zwiekszSile(+3);
 		komunikat = "Guarana zwiekszyla sile o 3 dla: ";
-		world->logger.push_back(komunikat += oponent->getSymbol());
+		swiat.logger.push_back(komunikat += oponent->getSymbol());
 	}
 }
 
+char Guarana::getSymbol() const {
+	return 'g';
 }
 
+}
 

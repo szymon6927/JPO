@@ -9,10 +9,13 @@
 
 namespace organizm {
 
-Organizm::Organizm() {
-	wiek = 0;
-	alive = true;
-}
+Organizm::Organizm(Swiat& swiat, int sila, int inicjatywa, int x, int y) :
+	swiat(swiat),
+	sila(sila),
+	inicjatywa(inicjatywa),
+	x(x),
+	y(y)
+{}
 
 bool Organizm::czyZywy() const {
 	return alive;
@@ -34,18 +37,12 @@ void Organizm::setWiek() {
 	this->wiek += 1;
 }
 
-void Organizm::setSwiat(Swiat& world) {
-	this->world = &world;
-	this->naMapie = world.mapaOrganizmow;
-	this->symbolNaMapie = world.mapa;
-}
-
-void Organizm::setSila(int oIle) {
+void Organizm::zwiekszSile(int oIle) {
 	sila = sila + oIle;
 }
 
 void Organizm::rysowanie() const {
-	symbolNaMapie[x][y] = symbol;
+	swiat.mapa[x][y] = getSymbol();
 }
 
 int Organizm::getX() const {
@@ -58,10 +55,6 @@ int Organizm::getY() const {
 
 int Organizm::getSila() const {
 	return sila;
-}
-
-char Organizm::getSymbol() const {
-	return symbol;
 }
 
 void Organizm::setWiek(int wiek) {

@@ -4,19 +4,12 @@
  *  Created on: 28.12.2017
  *      Author: Szymon
  */
-
+#include "Swiat.h"
 #include "Roslina.h"
 
 namespace roslina {
 
-Roslina::Roslina() {
-	inicjatywa = 0;
-	sila = 0;
-}
-
-Roslina::~Roslina() {
-
-}
+Roslina::Roslina(Swiat& swiat, int sila, int x, int y) : Organizm(swiat, sila, 0, x, y) {}
 
 void Roslina::akcja() {
 	//zwykle poruszanie sie
@@ -44,7 +37,7 @@ void Roslina::akcja() {
 			tmp_x -= 1;
 		}
 
-		if (naMapie[tmp_x][tmp_y] == nullptr) {
+		if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
 			rozmnazanie(tmp_x, tmp_y);
 		}
 	}

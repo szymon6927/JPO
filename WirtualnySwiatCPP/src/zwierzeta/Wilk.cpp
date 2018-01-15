@@ -10,16 +10,12 @@
 
 namespace zwierze {
 
-Wilk::Wilk(int x, int y) {
-	this->x = x;
-	this->y = y;
-	inicjatywa = 5;
-	sila = 9;
-	symbol = 'W';
+Wilk::Wilk(Swiat& swiat, int x, int y) :
+		Zwierze(swiat, 9, 5, x, y) {
 }
 
 Wilk::~Wilk() {
-	world->logger.push_back("Wilk padl!");
+	swiat.logger.push_back("Wilk padl!");
 }
 
 void Wilk::rozmnazanie(organizm::Organizm* partner) {
@@ -33,19 +29,24 @@ void Wilk::rozmnazanie(organizm::Organizm* partner) {
 	int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
 	for (unsigned j; j < 8; j++) {
-		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20 && naMapie[nx[j]][ny[j]] == nullptr) {
+		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
+				&& swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
 	}
 
 	if (miejsceWgospodzie) {
-		naMapie[nx[j]][ny[j]] = new Wilk(nx[j], ny[j]);
-		naMapie[nx[j]][ny[j]]->setSwiat(*world);
-		world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-		world->logger.push_back("Narodziny Wilka");
+		swiat.mapaOrganizmow[nx[j]][ny[j]] = new Wilk(swiat, nx[j], ny[j]);
+		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+		swiat.logger.push_back("Narodziny Wilka");
 	}
 
 }
+
+char Wilk::getSymbol() const {
+	return 'W';
+}
+
 }
 

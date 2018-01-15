@@ -9,16 +9,11 @@
 #include "../Swiat.h"
 
 namespace zwierze {
-Leniwiec::Leniwiec(int x, int y) {
-	this->x = x;
-	this->y = y;
-	inicjatywa = 1;
-	sila = 2;
-	symbol = 'L';
-	iloscRuchow = 0; // przy utworzeniu leniwca jego ilosc ruchow to 0, jezeli bedzie w ciagu tury inn
+Leniwiec::Leniwiec(Swiat& swiat, int x, int y) :
+		Zwierze(swiat, 2, 1, x, y) {
 }
 Leniwiec::~Leniwiec() {
-	world->logger.push_back("Umarl leniwiec!");
+	swiat.logger.push_back("Umarl leniwiec!");
 }
 
 void Leniwiec::akcja() {
@@ -48,24 +43,25 @@ void Leniwiec::akcja() {
 				tmp_x -= 1;
 			}
 
-			if (naMapie[tmp_x][tmp_y] == nullptr) {
-				naMapie[tmp_x][tmp_y] = naMapie[x][y];
-				naMapie[x][y] = nullptr;
+			if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
+				swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+				swiat.mapaOrganizmow[x][y] = nullptr;
 				x = tmp_x;
 				y = tmp_y;
-			} else if (naMapie[tmp_x][tmp_y]->getSymbol() == symbol
-					&& naMapie[tmp_x][tmp_y] != &*this) {
-				rozmnazanie(naMapie[tmp_x][tmp_y]); //sprawdz to
-			} else if (naMapie[tmp_x][tmp_y] != &*this) {
-				naMapie[tmp_x][tmp_y]->kolizja(&*this);
-				kolizja(naMapie[tmp_x][tmp_y]);
+			} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol()
+					== getSymbol()
+					&& swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
+				rozmnazanie (swiat.mapaOrganizmow[tmp_x][tmp_y]); //sprawdz to
+			} else if (swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
+				swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(&*this);
+				kolizja (swiat.mapaOrganizmow[tmp_x][tmp_y]);
 				if (czyZywy()) {
-					naMapie[tmp_x][tmp_y] = naMapie[x][y];
-					naMapie[x][y] = nullptr;
+					swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+					swiat.mapaOrganizmow[x][y] = nullptr;
 					x = tmp_x;
 					y = tmp_y;
 				} else if (!czyZywy()) {
-					naMapie[x][y] = nullptr;
+					swiat.mapaOrganizmow[x][y] = nullptr;
 				}
 			}
 		}
@@ -86,19 +82,23 @@ void Leniwiec::rozmnazanie(organizm::Organizm* partner) {
 
 	for (unsigned j; j < 8; j++) {
 		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
-				&& naMapie[nx[j]][ny[j]] == nullptr) {
+				&& swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
 	}
 
 	if (miejsceWgospodzie) {
-		naMapie[nx[j]][ny[j]] = new Leniwiec(nx[j], ny[j]);
-		naMapie[nx[j]][ny[j]]->setSwiat(*world);
-		world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-		world->logger.push_back("Narodziny Leniwca");
+		swiat.mapaOrganizmow[nx[j]][ny[j]] = new Leniwiec(swiat, nx[j], ny[j]);
+		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+		swiat.logger.push_back("Narodziny Leniwca");
 	}
 
 }
+
+char Leniwiec::getSymbol() const {
+	return 'L';
+}
+
 }
 

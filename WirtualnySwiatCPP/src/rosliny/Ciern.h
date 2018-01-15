@@ -14,10 +14,11 @@ namespace roslina {
 
 class Ciern: public Roslina {
 public:
-	Ciern(int x, int y);
-	~Ciern();
+	Ciern(Swiat& swiat, int x, int y);
+	virtual ~Ciern();
 	void akcja();
 	void rozmnazanie(int newX, int newY);
+	char getSymbol() const override;
 };
 
 }

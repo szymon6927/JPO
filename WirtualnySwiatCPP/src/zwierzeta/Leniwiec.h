@@ -14,13 +14,13 @@ namespace zwierze {
 
 class Leniwiec: public Zwierze {
 public:
-	Leniwiec(int x, int y);
-	~Leniwiec();
-
+	Leniwiec(Swiat& swiat, int x, int y);
+	virtual ~Leniwiec();
 	void rozmnazanie(organizm::Organizm* partner);
 	void akcja();
+	char getSymbol() const override;
 private:
-	int iloscRuchow;
+	int iloscRuchow=0; // przy utworzeniu leniwca jego ilosc ruchow to 0, jezeli bedzie w ciagu tury inn
 };
 }
 

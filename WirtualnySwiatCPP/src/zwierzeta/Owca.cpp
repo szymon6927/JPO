@@ -10,43 +10,41 @@
 
 namespace zwierze {
 
-Owca::Owca(int x, int y) {
-    this->x = x;
-    this->y = y;
-    inicjatywa = 4;
-    sila = 4;
-    symbol = 'O';
+Owca::Owca(Swiat& swiat, int x, int y) :
+		Zwierze(swiat, 4, 4, x, y) {
 }
 
 Owca::~Owca() {
-    world->logger.push_back("Owca umiera!");
+	swiat.logger.push_back("Owca umiera!");
 }
 
 void Owca::rozmnazanie(organizm::Organizm* partner) {
 
-    int tx = partner->getX();
-    int ty = partner->getY();
-    int j = 0;
-    bool miejsceWgospodzie = false;
+	int tx = partner->getX();
+	int ty = partner->getY();
+	int j = 0;
+	bool miejsceWgospodzie = false;
 
-    int nx[] = {    x,     x, x + 1, x - 1,     tx,     tx, tx + 1, tx - 1};
-    int ny[] = {y + 1, y - 1,     y,     y, ty + 1, ty - 1,     ty,     ty};
+	int nx[] = { x, x, x + 1, x - 1, tx, tx, tx + 1, tx - 1 };
+	int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
-    for (unsigned j; j < 8; j++ ) {
-        if (nx[j] >= 0 && nx[j] < 20 &&
-            ny[j] >= 0 && ny[j] < 20 &&
-            naMapie[nx[j]][ny[j]] == nullptr) {
-            miejsceWgospodzie = true;
-            break;
-        }
-    }
+	for (unsigned j; j < 8; j++) {
+		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
+				&& swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
+			miejsceWgospodzie = true;
+			break;
+		}
+	}
 
-    if (miejsceWgospodzie) {
-        naMapie[nx[j]][ny[j]] = new Owca(nx[j], ny[j]);
-        naMapie[nx[j]][ny[j]]->setSwiat(*world);
-        world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-        world->logger.push_back("Narodziny Owcy! baaaaaa!");
-    }
+	if (miejsceWgospodzie) {
+		swiat.mapaOrganizmow[nx[j]][ny[j]] = new Owca(swiat, nx[j], ny[j]);
+		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+		swiat.logger.push_back("Narodziny Owcy! baaaaaa!");
+	}
+}
+
+char Owca::getSymbol() const {
+	return 'O';
 }
 
 }

@@ -11,16 +11,10 @@
 
 namespace zwierze {
 
-Antylopa::Antylopa(int x, int y) {
-	this->x = x;
-	this->y = y;
-	inicjatywa = 4;
-	sila = 4;
-	symbol = 'A';
-}
+Antylopa::Antylopa(Swiat& swiat, int x, int y) : Zwierze(swiat, 4, 4, x, y) {}
 
 Antylopa::~Antylopa() {
-	world->logger.push_back("Antylopa umarla!");
+	swiat.logger.push_back("Antylopa umarla!");
 }
 
 void Antylopa::akcja() {
@@ -48,28 +42,28 @@ void Antylopa::akcja() {
 		tmp_x -= 2;
 	}
 
-	if (naMapie[tmp_x][tmp_y] == nullptr) {
-		naMapie[tmp_x][tmp_y] = naMapie[x][y];
-		naMapie[x][y] = nullptr;
+	if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
+		swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+		swiat.mapaOrganizmow[x][y] = nullptr;
 		x = tmp_x;
 		y = tmp_y;
 	}
-	else if (naMapie[tmp_x][tmp_y]->getSymbol() == symbol && naMapie[tmp_x][tmp_y] != &*this) {
-		rozmnazanie(naMapie[tmp_x][tmp_y]); //sprawdz to
+	else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol() == getSymbol() && swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
+		rozmnazanie(swiat.mapaOrganizmow[tmp_x][tmp_y]); //sprawdz to
 	}
-	else if (naMapie[tmp_x][tmp_y] != &*this) {
+	else if (swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
 
-		naMapie[tmp_x][tmp_y]->kolizja(&*this);
-		kolizja(naMapie[tmp_x][tmp_y]);
+		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(&*this);
+		kolizja(swiat.mapaOrganizmow[tmp_x][tmp_y]);
 
 		if (czyZywy()) {
-			naMapie[tmp_x][tmp_y] = naMapie[x][y];
-			naMapie[x][y] = nullptr;
+			swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
+			swiat.mapaOrganizmow[x][y] = nullptr;
 			x = tmp_x;
 			y = tmp_y;
 		}
 		else {
-			naMapie[x][y] = nullptr;
+			swiat.mapaOrganizmow[x][y] = nullptr;
 		}
 	}
 }
@@ -79,7 +73,7 @@ void Antylopa::kolizja(organizm::Organizm* oponent) {
 	std::string komunikat;
 	if (szansaUcieczki==0) {
 		komunikat = "Antylopa ucieka w walce z: ";
-		world->logger.push_back(komunikat += oponent->getSymbol());
+		swiat.logger.push_back(komunikat += oponent->getSymbol());
 		this->akcja();
 	}
 	else {
@@ -87,17 +81,17 @@ void Antylopa::kolizja(organizm::Organizm* oponent) {
 		if (sila > tmp_sila) {
 			oponent->setAlive(false);
 			komunikat = "Antylopa wygrywa z: ";
-			world->logger.push_back(komunikat += oponent->getSymbol());
+			swiat.logger.push_back(komunikat += oponent->getSymbol());
 		}
 		else if (sila < tmp_sila) {
 			setAlive(false);
 			komunikat = "Antylopa przegrywa z: ";
-			world->logger.push_back(komunikat += oponent->getSymbol());
+			swiat.logger.push_back(komunikat += oponent->getSymbol());
 		}
 		else if (alive) {
 			setAlive(false);
 			komunikat = "Antylopa przegrywa bo pierwszy zaatakowal: ";
-			world->logger.push_back(komunikat += oponent->getSymbol());
+			swiat.logger.push_back(komunikat += oponent->getSymbol());
 		}
 	}
 }
@@ -114,20 +108,22 @@ void Antylopa::rozmnazanie(organizm::Organizm* partner) {
 	for ( ; j < 8; j++ ) {
 		if (nx[j] >= 0 && nx[j] < 20 &&
 			ny[j] >= 0 && ny[j] < 20 &&
-			naMapie[nx[j]][ny[j]] == nullptr) {
+			swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
 	}
 
 	if (miejsceWgospodzie) {
-		naMapie[nx[j]][ny[j]] = new Antylopa(nx[j], ny[j]);
-		naMapie[nx[j]][ny[j]]->setSwiat(*world);
-		world->organizmy.push_back(naMapie[nx[j]][ny[j]]);
-		world->logger.push_back("Narodziny Antylopy-(rozmnozenie)");
+		swiat.mapaOrganizmow[nx[j]][ny[j]] = new Antylopa(swiat ,nx[j], ny[j]);
+		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+		swiat.logger.push_back("Narodziny Antylopy-(rozmnozenie)");
 	}
 }
 
+char Antylopa::getSymbol() const {
+	return 'A';
 }
 
+}
 
