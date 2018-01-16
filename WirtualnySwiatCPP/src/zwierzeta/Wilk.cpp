@@ -18,7 +18,7 @@ Wilk::~Wilk() {
 	swiat.logger.push_back("Wilk padl!");
 }
 
-void Wilk::rozmnazanie(organizm::Organizm& partner) {
+void Wilk::rozmnazanie(Organizm& partner) {
 
 	int tx = partner.getX();
 	int ty = partner.getY();
@@ -37,9 +37,7 @@ void Wilk::rozmnazanie(organizm::Organizm& partner) {
 	}
 
 	if (miejsceWgospodzie) {
-		swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Wilk>(swiat, nx[j], ny[j]);
-		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
-		swiat.logger.push_back("Narodziny Wilka");
+		swiat.dodajOrganizm<Wilk>(nx[j], ny[j], "Narodziny Wilka-(rozmnozenie)");
 	}
 
 }

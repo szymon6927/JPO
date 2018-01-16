@@ -19,12 +19,10 @@ Guarana::~Guarana() {
 }
 
 void Guarana::rozmnazanie(int newX, int newY) {
-	swiat.mapaOrganizmow[newX][newY] = std::make_unique<Guarana>(swiat, newX, newY);
-	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY].get());
-	swiat.logger.push_back("Narodziny-(rozmnozenie) Guarany");
+	swiat.dodajOrganizm<Guarana>(newX, newY, "Narodziny-(rozmnozenie) Guarany");
 }
 
-void Guarana::kolizja(organizm::Organizm* oponent) {
+void Guarana::kolizja(Organizm* oponent) {
 	int tmp_sila = oponent->getSila();
 	std::string komunikat;
 	if (sila > tmp_sila) {

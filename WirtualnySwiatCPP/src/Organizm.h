@@ -23,8 +23,6 @@
 
 class Swiat;
 
-namespace organizm {
-
 class Organizm {
 
 public:
@@ -55,6 +53,5 @@ protected:
 	int x;
 	int y;
 };
-} // namespace organizm
 
 #endif /* ORGANIZM_H_ */

@@ -65,7 +65,7 @@ void Antylopa::akcja() {
 	}
 }
 
-void Antylopa::kolizja(organizm::Organizm& oponent) {
+void Antylopa::kolizja(Organizm& oponent) {
 	int szansaUcieczki = rand() % 2; // daje mi 0 albo 1
 	std::string komunikat;
 	if (szansaUcieczki == 0) {
@@ -90,7 +90,7 @@ void Antylopa::kolizja(organizm::Organizm& oponent) {
 	}
 }
 
-void Antylopa::rozmnazanie(organizm::Organizm& partner) {
+void Antylopa::rozmnazanie(Organizm& partner) {
 	int tx = partner.getX();
 	int ty = partner.getY();
 	int j = 0;
@@ -108,10 +108,7 @@ void Antylopa::rozmnazanie(organizm::Organizm& partner) {
 	}
 
 	if (miejsceWgospodzie) {
-		swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Antylopa>(swiat,
-				nx[j], ny[j]);
-		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
-		swiat.logger.push_back("Narodziny Antylopy-(rozmnozenie)");
+		swiat.dodajOrganizm<Antylopa>(nx[j], ny[j], "Narodziny Antylopy-(rozmnozenie)");
 	}
 }
 

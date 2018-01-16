@@ -55,7 +55,7 @@ void Zwierze::akcja() {
 	}
 }
 
-void Zwierze::kolizja(organizm::Organizm& oponent) {
+void Zwierze::kolizja(Organizm& oponent) {
 	//jezeli zwierzaki te same = rozmnazanie
 	int tmp_sila = oponent.getSila();
 

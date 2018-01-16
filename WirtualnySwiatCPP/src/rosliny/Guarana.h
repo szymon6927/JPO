@@ -15,7 +15,7 @@ class Guarana: public Roslina {
 public:
 	Guarana(Swiat& swiat, int x, int y);
 	virtual ~Guarana();
-	void kolizja(organizm::Organizm* oponent);
+	void kolizja(Organizm* oponent);
 	void rozmnazanie(int newX, int newY);
 	char getSymbol() const override;
 };

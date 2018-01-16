@@ -45,9 +45,7 @@ void Ciern::akcja() {
 }
 
 void Ciern::rozmnazanie(int newX, int newY) {
-	swiat.mapaOrganizmow[newX][newY] = std::make_unique<Ciern>(swiat, newX, newY);
-	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY].get());
-	swiat.logger.push_back("Ciern narodziny (rozmnozenie)");
+	swiat.dodajOrganizm<Ciern>(newX, newY, "Narodziny narodziny-(rozmnozenie)");
 }
 
 char Ciern::getSymbol() const {

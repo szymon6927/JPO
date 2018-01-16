@@ -7,15 +7,9 @@
 #include "Organizm.h"
 #include "Swiat.h"
 
-namespace organizm {
-
 Organizm::Organizm(Swiat& swiat, int sila, int inicjatywa, int x, int y) :
-	swiat(swiat),
-	sila(sila),
-	inicjatywa(inicjatywa),
-	x(x),
-	y(y)
-{}
+		swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y) {
+}
 
 bool Organizm::czyZywy() const {
 	return alive;
@@ -58,8 +52,6 @@ int Organizm::getSila() const {
 }
 
 void Organizm::setWiek(int wiek) {
-    this->wiek = wiek;
-}
-
+	this->wiek = wiek;
 }
 

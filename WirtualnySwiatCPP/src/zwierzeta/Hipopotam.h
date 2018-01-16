@@ -16,7 +16,7 @@ class Hipopotam: public Zwierze {
 public:
 	Hipopotam(Swiat& swiat, int x, int y);
 	virtual ~Hipopotam();
-	void rozmnazanie(organizm::Organizm& partner);
+	void rozmnazanie(Organizm& partner);
 	char getSymbol() const override;
 };
 

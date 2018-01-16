@@ -69,7 +69,7 @@ void Leniwiec::akcja() {
 	}
 }
 
-void Leniwiec::rozmnazanie(organizm::Organizm& partner) {
+void Leniwiec::rozmnazanie(Organizm& partner) {
 
 	int tx = partner.getX();
 	int ty = partner.getY();
@@ -88,10 +88,7 @@ void Leniwiec::rozmnazanie(organizm::Organizm& partner) {
 	}
 
 	if (miejsceWgospodzie) {
-		swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Leniwiec>(swiat,
-				nx[j], ny[j]);
-		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
-		swiat.logger.push_back("Narodziny Leniwca");
+		swiat.dodajOrganizm<Leniwiec>(nx[j], ny[j], "Narodziny Leniwca-(rozmnozenie)");
 	}
 
 }

@@ -35,7 +35,7 @@ Swiat::Swiat() {
 
 }
 
-bool Swiat::sortowanie(organizm::Organizm* i, organizm::Organizm* j) {
+bool Swiat::sortowanie(Organizm* i, Organizm* j) {
 	int tmp_i = i->getInicjatywa();
 	int tmp_j = j->getInicjatywa();
 
@@ -45,7 +45,7 @@ bool Swiat::sortowanie(organizm::Organizm* i, organizm::Organizm* j) {
 	return (tmp_i > tmp_j);
 }
 
-bool Swiat::sortowanieZywych(organizm::Organizm* i, organizm::Organizm* j) {
+bool Swiat::sortowanieZywych(Organizm* i, Organizm* j) {
 	return (i->czyZywy() > j->czyZywy());
 }
 
@@ -84,22 +84,16 @@ void Swiat::rysujSwiat() {
 
 void Swiat::wykonajTure() {
 
-	int ilosc = organizmy.size();
+	std::sort(organizmy.begin(), organizmy.end(), sortowanie);
 
-	for (int i = 0; i < ilosc; i++) {
-		organizmy[i]->setWiek();
-	}
-
-	for (int i = 0; i < ilosc; i++) {
-
-		if (organizmy[i]->czyZywy()) {
-			organizmy[i]->akcja();
+	for(auto& organizm : organizmy) {
+		organizm->setWiek();
+		if (organizm->czyZywy()) {
+			organizm->akcja();
 		}
 	}
 
-	std::sort(organizmy.begin(), organizmy.end(), sortowanieZywych);
-
-	for (int i = ilosc - 1; i >= 0; i--) {
+	for (int i = organizmy.size() - 1; i >= 0; i--) {
 		if (!organizmy[i]->czyZywy()) {
 			delete organizmy[i];
 			organizmy.erase(organizmy.begin() + i);
@@ -108,7 +102,7 @@ void Swiat::wykonajTure() {
 		}
 	}
 
-	std::sort(organizmy.begin(), organizmy.end(), sortowanie);
+	std::sort(organizmy.begin(), organizmy.end(), sortowanieZywych);
 }
 
 std::string Swiat::zachowajSwiat() const {

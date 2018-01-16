@@ -37,11 +37,7 @@ void Hipopotam::rozmnazanie(Organizm& partner) {
 		}
 
 		if (miejsceWgospodzie) {
-			swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Hipopotam>(swiat, nx[j],
-					ny[j]);
-			swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
-			swiat.logger.push_back(
-					"Narodziny Hipopotama - najwiekszego kozaka w wirtualnym Swiecie!");
+			swiat.dodajOrganizm<Hipopotam>(nx[j], ny[j], "Narodziny Hipopotama - najwiekszego kozaaka!");
 		}
 	}
 }

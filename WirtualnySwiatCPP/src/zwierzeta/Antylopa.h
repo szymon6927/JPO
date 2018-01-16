@@ -15,8 +15,8 @@ class Antylopa: public Zwierze {
 public:
 	Antylopa(Swiat& swiat, int x, int y);
 	virtual ~Antylopa();
-	void rozmnazanie(organizm::Organizm& partner);
-	void kolizja(organizm::Organizm& oponent);
+	void rozmnazanie(Organizm& partner);
+	void kolizja(Organizm& oponent);
 	void akcja();
 	char getSymbol() const override;
 };

@@ -43,7 +43,7 @@ void Roslina::akcja() {
 	}
 }
 
-void Roslina::kolizja(organizm::Organizm& oponent) {
+void Roslina::kolizja(Organizm& oponent) {
 	//jezeli zwierzaki te same = rozmnazanie
 	int tmp_sila = oponent.getSila();
 
