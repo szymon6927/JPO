@@ -16,7 +16,7 @@ class Leniwiec: public Zwierze {
 public:
 	Leniwiec(Swiat& swiat, int x, int y);
 	virtual ~Leniwiec();
-	void rozmnazanie(organizm::Organizm* partner);
+	void rozmnazanie(organizm::Organizm& partner);
 	void akcja();
 	char getSymbol() const override;
 private:

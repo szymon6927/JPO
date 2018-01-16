@@ -43,20 +43,16 @@ void Roslina::akcja() {
 	}
 }
 
-void Roslina::kolizja(organizm::Organizm* oponent) {
+void Roslina::kolizja(organizm::Organizm& oponent) {
 	//jezeli zwierzaki te same = rozmnazanie
-	int tmp_sila = oponent->getSila();
+	int tmp_sila = oponent.getSila();
 
-	if (sila > tmp_sila) {
-		oponent->setAlive(false);
+	if (sila >= tmp_sila) {
+		oponent.setAlive(false);
 	} else if (sila < tmp_sila) {
 		setAlive(false);
 	}
 
-}
-
-void Roslina::rozmnazanie(organizm::Organizm* partner) {
-	//dummy
 }
 
 }

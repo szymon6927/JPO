@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <vector>
 #include <algorithm>
+#include <memory>
+#include <array>
 #include <string>
 #include "Organizm.h"
 
@@ -19,8 +21,10 @@ class Swiat {
 private:
 	static bool sortowanie(organizm::Organizm* i, organizm::Organizm* j);
 	static bool sortowanieZywych(organizm::Organizm* i, organizm::Organizm* j);
+
+	static const int wielkoscSwiata = 20;
 public:
-	organizm::Organizm*** mapaOrganizmow;
+	std::array<std::array<std::unique_ptr<organizm::Organizm>, wielkoscSwiata>, wielkoscSwiata> mapaOrganizmow;
 	std::vector<organizm::Organizm*> organizmy;
 	std::vector<std::string> logger;
 

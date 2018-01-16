@@ -19,8 +19,8 @@ Trawa::~Trawa() {
 }
 
 void Trawa::rozmnazanie(int newX, int newY) {
-	swiat.mapaOrganizmow[newX][newY] = new Trawa(swiat, newX, newY);
-	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY]);
+	swiat.mapaOrganizmow[newX][newY] = std::make_unique<Trawa>(swiat, newX, newY);
+	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY].get());
 	swiat.logger.push_back("Narodziny nudnej Trawy");
 }
 

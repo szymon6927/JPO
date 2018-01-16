@@ -44,20 +44,19 @@ void Leniwiec::akcja() {
 			}
 
 			if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
-				swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
-				swiat.mapaOrganizmow[x][y] = nullptr;
+				swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(swiat.mapaOrganizmow[x][y]);
 				x = tmp_x;
 				y = tmp_y;
 			} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol()
 					== getSymbol()
-					&& swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
-				rozmnazanie (swiat.mapaOrganizmow[tmp_x][tmp_y]); //sprawdz to
-			} else if (swiat.mapaOrganizmow[tmp_x][tmp_y] != &*this) {
-				swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(&*this);
-				kolizja (swiat.mapaOrganizmow[tmp_x][tmp_y]);
+					&& swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
+				rozmnazanie(*swiat.mapaOrganizmow[tmp_x][tmp_y]); //sprawdz to
+			} else if (swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
+				swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(*this);
+				kolizja(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
 				if (czyZywy()) {
-					swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
-					swiat.mapaOrganizmow[x][y] = nullptr;
+					swiat.mapaOrganizmow[tmp_x][tmp_y] =
+							std::move(swiat.mapaOrganizmow[x][y]);
 					x = tmp_x;
 					y = tmp_y;
 				} else if (!czyZywy()) {
@@ -70,10 +69,10 @@ void Leniwiec::akcja() {
 	}
 }
 
-void Leniwiec::rozmnazanie(organizm::Organizm* partner) {
+void Leniwiec::rozmnazanie(organizm::Organizm& partner) {
 
-	int tx = partner->getX();
-	int ty = partner->getY();
+	int tx = partner.getX();
+	int ty = partner.getY();
 	int j = 0;
 	bool miejsceWgospodzie = false;
 
@@ -89,8 +88,9 @@ void Leniwiec::rozmnazanie(organizm::Organizm* partner) {
 	}
 
 	if (miejsceWgospodzie) {
-		swiat.mapaOrganizmow[nx[j]][ny[j]] = new Leniwiec(swiat, nx[j], ny[j]);
-		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+		swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Leniwiec>(swiat,
+				nx[j], ny[j]);
+		swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
 		swiat.logger.push_back("Narodziny Leniwca");
 	}
 

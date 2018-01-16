@@ -17,7 +17,7 @@ class Wilk: public Zwierze {
 public:
 	Wilk(Swiat& swiat, int x, int y);
 	virtual ~Wilk();
-	void rozmnazanie(organizm::Organizm* partner);
+	void rozmnazanie(organizm::Organizm& partner);
 	char getSymbol() const override;
 };
 }

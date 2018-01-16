@@ -18,10 +18,10 @@ Hipopotam::~Hipopotam() {
 	swiat.logger.push_back("Najslinijeszy z zwierzat umiera !!! :(");
 }
 
-void Hipopotam::rozmnazanie(Organizm* partner) {
+void Hipopotam::rozmnazanie(Organizm& partner) {
 	for (int i = 0; i < 2; i++) {
-		int tx = partner->getX();
-		int ty = partner->getY();
+		int tx = partner.getX();
+		int ty = partner.getY();
 		int j = 0;
 		bool miejsceWgospodzie = false;
 
@@ -37,9 +37,9 @@ void Hipopotam::rozmnazanie(Organizm* partner) {
 		}
 
 		if (miejsceWgospodzie) {
-			swiat.mapaOrganizmow[nx[j]][ny[j]] = new Hipopotam(swiat, nx[j],
+			swiat.mapaOrganizmow[nx[j]][ny[j]] = std::make_unique<Hipopotam>(swiat, nx[j],
 					ny[j]);
-			swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]]);
+			swiat.organizmy.push_back(swiat.mapaOrganizmow[nx[j]][ny[j]].get());
 			swiat.logger.push_back(
 					"Narodziny Hipopotama - najwiekszego kozaka w wirtualnym Swiecie!");
 		}

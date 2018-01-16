@@ -24,15 +24,6 @@
 
 Swiat::Swiat() {
 
-	mapaOrganizmow = new organizm::Organizm**[20];
-	for (int i = 0; i < 20; i++) {
-
-		mapaOrganizmow[i] = new organizm::Organizm*[20];
-		for (int j = 0; j < 20; j++) {
-			mapaOrganizmow[i][j] = nullptr;
-		}
-	}
-
 	mapa = new char*[20];
 	for (int i = 0; i < 20; i++) {
 		mapa[i] = new char[20];
@@ -151,39 +142,12 @@ void Swiat::utworzSwiat() {
 }
 
 Swiat::~Swiat() {
-
-	int size = organizmy.size();
-
-	for (int i = 0; i < size; i++) {
-		delete organizmy[i];
-	}
-
-	for (int i = 0; i < 20; i++) {
-		delete mapa[i];
-	}
-	delete[] mapa;
-
-	organizmy.clear();
 	std::cout << "Destrukcja mapy" << std::endl;
-
-	for (unsigned i = 0; i < 20; i++) {
-		for (unsigned j = 0; j < 20; j++) {
-			mapaOrganizmow[i][j] = nullptr;
-		}
-	}
-
-	for (int i = 0; i < 20; i++) {
-		delete mapaOrganizmow[i];
-	}
-	delete[] mapaOrganizmow;
-
 	std::cout << "Zabijamy organizmy" << std::endl;
 
-	for (unsigned i = 0; i < logger.size(); i++) {
-		std::cout << logger[i] << std::endl;
+	for (const auto& log : logger) {
+		std::cout << log << std::endl;
 	}
-
-	logger.clear();
 }
 
 void Swiat::inputParser(int argc, char** argv) {
@@ -294,32 +258,32 @@ void Swiat::inputParser(int argc, char** argv) {
 		if (mapaOrganizmow[x][y] == nullptr) {
 			switch (zwierzak) {
 			case 'W':
-				mapaOrganizmow[x][y] = new zwierze::Wilk(*this ,x, y);
+				mapaOrganizmow[x][y] = std::make_unique<zwierze::Wilk>(*this ,x, y);
 				break;
 			case 'L':
-				mapaOrganizmow[x][y] = new zwierze::Leniwiec(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<zwierze::Leniwiec>(*this , x, y);
 				break;
 			case 'A':
-				mapaOrganizmow[x][y] = new zwierze::Antylopa(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<zwierze::Antylopa>(*this , x, y);
 				break;
 			case 'O':
-				mapaOrganizmow[x][y] = new zwierze::Owca(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<zwierze::Owca>(*this , x, y);
 				break;
 			case 'H':
-				mapaOrganizmow[x][y] = new zwierze::Hipopotam(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<zwierze::Hipopotam>(*this , x, y);
 				break;
 			case 'c':
-				mapaOrganizmow[x][y] = new roslina::Ciern(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<roslina::Ciern>(*this , x, y);
 				break;
 			case 'g':
-				mapaOrganizmow[x][y] = new roslina::Guarana(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<roslina::Guarana>(*this , x, y);
 				break;
 			case 't':
-				mapaOrganizmow[x][y] = new roslina::Trawa(*this , x, y);
+				mapaOrganizmow[x][y] = std::make_unique<roslina::Trawa>(*this , x, y);
 				break;
 			}
 			//podstawowe parametry przy wczytywaniu
-			this->organizmy.push_back(mapaOrganizmow[x][y]);
+			this->organizmy.push_back(mapaOrganizmow[x][y].get());
 			mapaOrganizmow[x][y]->setWiek(w);
 		} else {
 			std::cout << "Pole zajete" << std::endl;

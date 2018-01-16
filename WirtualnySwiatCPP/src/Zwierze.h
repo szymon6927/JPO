@@ -16,9 +16,8 @@ class Zwierze: public organizm::Organizm {
 
 protected:
 	Zwierze(Swiat& swiat, int sila, int inicjatywa, int x, int y);
-	virtual void rozmnazanie(organizm::Organizm* partner)=0;
-	virtual void rozmnazanie(int newX, int newY);
-	virtual void kolizja(organizm::Organizm* oponent);
+	virtual void rozmnazanie(organizm::Organizm& partner) = 0;
+	virtual void kolizja(organizm::Organizm& oponent);
 	virtual void akcja();
 };
 }

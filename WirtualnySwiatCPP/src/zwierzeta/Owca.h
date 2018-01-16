@@ -17,7 +17,7 @@ class Owca: public Zwierze {
 public:
 	Owca(Swiat& swiat, int x, int y);
 	virtual ~Owca();
-	void rozmnazanie(organizm::Organizm* partner);
+	void rozmnazanie(organizm::Organizm& partner);
 	char getSymbol() const override;
 };
 }

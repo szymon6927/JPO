@@ -36,19 +36,17 @@ void Zwierze::akcja() {
 	}
 
 	if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
-		swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
-		swiat.mapaOrganizmow[x][y] = nullptr;
+		swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(swiat.mapaOrganizmow[x][y]);
 		x = tmp_x;
 		y = tmp_y;
 	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol() == getSymbol()
-			&& swiat.mapaOrganizmow[tmp_x][tmp_y] != this) {
-		rozmnazanie(swiat.mapaOrganizmow[tmp_x][tmp_y]);
-	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y] != this) {
-		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(this);
-		kolizja(swiat.mapaOrganizmow[tmp_x][tmp_y]);
+			&& swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
+		rozmnazanie(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
+	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
+		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(*this);
+		kolizja(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
 		if (czyZywy()) {
-			swiat.mapaOrganizmow[tmp_x][tmp_y] = swiat.mapaOrganizmow[x][y];
-			swiat.mapaOrganizmow[x][y] = nullptr;
+			swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(swiat.mapaOrganizmow[x][y]);
 			x = tmp_x;
 			y = tmp_y;
 		} else if (!czyZywy()) {
@@ -57,22 +55,16 @@ void Zwierze::akcja() {
 	}
 }
 
-void Zwierze::kolizja(organizm::Organizm* oponent) {
+void Zwierze::kolizja(organizm::Organizm& oponent) {
 	//jezeli zwierzaki te same = rozmnazanie
-	int tmp_sila = oponent->getSila();
+	int tmp_sila = oponent.getSila();
 
-	if (sila > tmp_sila) {
-		oponent->setAlive(false);
+	if (sila >= tmp_sila) {
+		oponent.setAlive(false);
 	} else if (sila < tmp_sila) {
-		setAlive(false);
-	} else if (alive) {
 		setAlive(false);
 	}
 
-}
-
-void Zwierze::rozmnazanie(int newX, int newY) {
-	//dummy
 }
 
 }

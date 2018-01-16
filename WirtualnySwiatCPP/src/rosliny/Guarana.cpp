@@ -19,8 +19,8 @@ Guarana::~Guarana() {
 }
 
 void Guarana::rozmnazanie(int newX, int newY) {
-	swiat.mapaOrganizmow[newX][newY] = new Guarana(swiat, newX, newY);
-	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY]);
+	swiat.mapaOrganizmow[newX][newY] = std::make_unique<Guarana>(swiat, newX, newY);
+	swiat.organizmy.push_back(swiat.mapaOrganizmow[newX][newY].get());
 	swiat.logger.push_back("Narodziny-(rozmnozenie) Guarany");
 }
 
