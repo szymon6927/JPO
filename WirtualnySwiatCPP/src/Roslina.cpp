@@ -37,7 +37,7 @@ void Roslina::akcja() {
 			tmp_x -= 1;
 		}
 
-		if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
+		if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
 			rozmnazanie(tmp_x, tmp_y);
 		}
 	}

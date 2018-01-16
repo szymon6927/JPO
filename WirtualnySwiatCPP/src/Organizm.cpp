@@ -55,3 +55,10 @@ void Organizm::setWiek(int wiek) {
 	this->wiek = wiek;
 }
 
+void Organizm::setX(int posX) {
+	x = posX;
+}
+
+void Organizm::setY(int posY) {
+	y = posY;
+}

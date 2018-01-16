@@ -24,33 +24,30 @@ void Zwierze::akcja() {
 	if ((kierunek == 0) && (y > 0)) {
 		//ruch w gore
 		tmp_y -= 1;
-	} else if ((kierunek == 1) && (x < wymiar - 1)) {
+	}
+	else if ((kierunek == 1) && (x < wymiar - 1)) {
 		//ruch w prawo
 		tmp_x += 1;
-	} else if ((kierunek == 2) && (y < wymiar - 1)) {
+	}
+	else if ((kierunek == 2) && (y < wymiar - 1)) {
 		//ruch w dol
 		tmp_y += 1;
-	} else if ((kierunek == 3) && (x > 0)) {
+	}
+	else if ((kierunek == 3) && (x > 0)) {
 		//ruch w lewo
 		tmp_x -= 1;
 	}
 
-	if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
-		swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(swiat.mapaOrganizmow[x][y]);
-		x = tmp_x;
-		y = tmp_y;
-	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol() == getSymbol()
-			&& swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
-		rozmnazanie(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
-	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
-		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(*this);
-		kolizja(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
+	if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
+		swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
+	}
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol()) {
+		rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
+	}
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
+		kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 		if (czyZywy()) {
-			swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(swiat.mapaOrganizmow[x][y]);
-			x = tmp_x;
-			y = tmp_y;
-		} else if (!czyZywy()) {
-			swiat.mapaOrganizmow[x][y] = nullptr;
+			swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
 		}
 	}
 }
@@ -61,7 +58,8 @@ void Zwierze::kolizja(Organizm& oponent) {
 
 	if (sila >= tmp_sila) {
 		oponent.setAlive(false);
-	} else if (sila < tmp_sila) {
+	}
+	else if (sila < tmp_sila) {
 		setAlive(false);
 	}
 

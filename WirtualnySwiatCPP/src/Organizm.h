@@ -40,6 +40,8 @@ public:
 	void zwiekszSile(int oIle);
 	int getX() const;
 	int getY() const;
+	void setX(int posX);
+	void setY(int posY);
 
 	Organizm(Swiat& swiat, int sila, int inicjatywa, int x, int y);
 	virtual ~Organizm() = default;

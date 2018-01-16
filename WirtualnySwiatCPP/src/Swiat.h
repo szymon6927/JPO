@@ -24,10 +24,13 @@ private:
 	static bool sortowanieZywych(Organizm* i, Organizm* j);
 
 	static const int wielkoscSwiata = 20;
-public:
-	std::array<std::array<std::unique_ptr<Organizm>, wielkoscSwiata>,
-			wielkoscSwiata> mapaOrganizmow;
+
+	std::array<std::array<std::unique_ptr<Organizm>, wielkoscSwiata>, wielkoscSwiata> mapaOrganizmow;
 	std::vector<Organizm*> organizmy;
+public:
+	Organizm* znajdzOrganizmPoPozycji(int x, int y);
+	void zamienMiejscami(int x1, int y1, int x2, int y2) noexcept; // move ctor zawsze noexcept (przezuca tylko pointery) ~ silna konwecja
+
 	std::vector<std::string> logger;
 	char** mapa;
 

@@ -82,6 +82,19 @@ void Swiat::rysujSwiat() {
 	std::cout << "Kazdy inny tekst bedzie kontynuowac program" << std::endl;
 }
 
+Organizm* Swiat::znajdzOrganizmPoPozycji(int x, int y) {
+	return mapaOrganizmow[x][y].get();
+}
+
+void Swiat::zamienMiejscami(int x1, int y1, int x2, int y2) noexcept {
+	std::swap(mapaOrganizmow[x1][y1], mapaOrganizmow[x2][y2]);
+	mapaOrganizmow[x1][y1]->setX(x2);
+	mapaOrganizmow[x1][y1]->setY(y2);
+
+	mapaOrganizmow[x2][y2]->setX(x1);
+	mapaOrganizmow[x2][y2]->setY(y1);
+}
+
 void Swiat::wykonajTure() {
 
 	std::sort(organizmy.begin(), organizmy.end(), sortowanie);
@@ -284,4 +297,3 @@ void Swiat::inputParser(int argc, char** argv) {
 		}
 	}
 }
-

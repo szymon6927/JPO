@@ -30,37 +30,31 @@ void Antylopa::akcja() {
 	if ((kierunek == 0) && (y > 2)) {
 		//ruch w gore o 2
 		tmp_y -= 2;
-	} else if ((kierunek == 1) && (x < wymiar - 2)) {
+	}
+	else if ((kierunek == 1) && (x < wymiar - 2)) {
 		//ruch w prawo o 2
 		tmp_x += 2;
-	} else if ((kierunek == 2) && (y < wymiar - 2)) {
+	}
+	else if ((kierunek == 2) && (y < wymiar - 2)) {
 		//ruch w dol o 2
 		tmp_y += 2;
-	} else if ((kierunek == 3) && (x > 2)) {
+	}
+	else if ((kierunek == 3) && (x > 2)) {
 		//ruch w lewo o 2
 		tmp_x -= 2;
 	}
 
-	if (swiat.mapaOrganizmow[tmp_x][tmp_y] == nullptr) {
-		swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(
-				swiat.mapaOrganizmow[x][y]);
-		x = tmp_x;
-		y = tmp_y;
-	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y]->getSymbol() == getSymbol()
-			&& swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
-		rozmnazanie(*swiat.mapaOrganizmow[tmp_x][tmp_y]); //sprawdz to
-	} else if (swiat.mapaOrganizmow[tmp_x][tmp_y].get() != this) {
-
-		swiat.mapaOrganizmow[tmp_x][tmp_y]->kolizja(*this);
-		kolizja(*swiat.mapaOrganizmow[tmp_x][tmp_y]);
+	if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
+		swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
+	}
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol()) {
+		rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)); //sprawdz to
+	}
+	else {
+		kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 
 		if (czyZywy()) {
-			swiat.mapaOrganizmow[tmp_x][tmp_y] = std::move(
-					swiat.mapaOrganizmow[x][y]);
-			x = tmp_x;
-			y = tmp_y;
-		} else {
-			swiat.mapaOrganizmow[x][y] = nullptr;
+			swiat.zamienMiejscami(x, y, tmp_x, tmp_y); // wygrana - zaminan miejscami z zwlokami
 		}
 	}
 }
@@ -71,20 +65,19 @@ void Antylopa::kolizja(Organizm& oponent) {
 	if (szansaUcieczki == 0) {
 		komunikat = "Antylopa ucieka w walce z: ";
 		swiat.logger.push_back(komunikat += oponent.getSymbol());
-		this->akcja();
-	} else {
+		//todo funkcja ucieczki
+		//this->akcja();
+	}
+	else {
 		int tmp_sila = oponent.getSila();
-		if (sila > tmp_sila) {
+		if (sila >= tmp_sila) {
 			oponent.setAlive(false);
 			komunikat = "Antylopa wygrywa z: ";
 			swiat.logger.push_back(komunikat += oponent.getSymbol());
-		} else if (sila < tmp_sila) {
+		}
+		else if (sila < tmp_sila) {
 			setAlive(false);
 			komunikat = "Antylopa przegrywa z: ";
-			swiat.logger.push_back(komunikat += oponent.getSymbol());
-		} else if (alive) {
-			setAlive(false);
-			komunikat = "Antylopa przegrywa bo pierwszy zaatakowal: ";
 			swiat.logger.push_back(komunikat += oponent.getSymbol());
 		}
 	}
@@ -100,8 +93,7 @@ void Antylopa::rozmnazanie(Organizm& partner) {
 	int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
 	for (; j < 8; j++) {
-		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
-				&& swiat.mapaOrganizmow[nx[j]][ny[j]] == nullptr) {
+		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20 && swiat.znajdzOrganizmPoPozycji(nx[j], ny[j]) == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
