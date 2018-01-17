@@ -52,21 +52,17 @@ void Antylopa::akcja() {
 	}
 	else {
 		kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
-
-		if (czyZywy()) {
-			swiat.zamienMiejscami(x, y, tmp_x, tmp_y); // wygrana - zaminan miejscami z zwlokami
-		}
 	}
 }
 
 void Antylopa::kolizja(Organizm& oponent) {
 	int szansaUcieczki = rand() % 2; // daje mi 0 albo 1
+
 	std::string komunikat;
 	if (szansaUcieczki == 0) {
 		komunikat = "Antylopa ucieka w walce z: ";
 		swiat.logger.push_back(komunikat += oponent.getSymbol());
 		//todo funkcja ucieczki
-		//this->akcja();
 	}
 	else {
 		int tmp_sila = oponent.getSila();

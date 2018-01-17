@@ -14,6 +14,7 @@
 #include <string>
 #include <type_traits>
 #include "Organizm.h"
+#include <cassert>
 
 #ifndef SWIAT_H_
 #define SWIAT_H_
@@ -25,7 +26,6 @@ private:
 	static const int wielkoscSwiata = 20;
 
 	std::array<std::array<std::unique_ptr<Organizm>, wielkoscSwiata>, wielkoscSwiata> mapaOrganizmow;
-	std::vector<Organizm*> organizmy;
 public:
 	Organizm* znajdzOrganizmPoPozycji(int x, int y);
 
@@ -53,8 +53,11 @@ template<typename T>
 void Swiat::dodajOrganizm(int x, int y, const std::string& log) {
 	static_assert(std::is_base_of<Organizm, T>::value, "Nie prawidlowy typ T, musi byc organizmem");
 
+	assert(x < wielkoscSwiata && x >= 0);
+	assert(y < wielkoscSwiata && y >= 0);
+
 	mapaOrganizmow[x][y] = std::make_unique<T>(*this, x, y);
-	organizmy.push_back(mapaOrganizmow[x][y].get());
+	//organizmy.push_back(mapaOrganizmow[x][y].get());
 	logger.push_back(log);
 }
 

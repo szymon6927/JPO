@@ -16,10 +16,9 @@ class Roslina: public Organizm {
 
 public:
 	Roslina(Swiat& swiat, int sila, int x, int y);
-	virtual ~Roslina() = default;
-	virtual void kolizja(Organizm& oponent);
-	virtual void rozmnazanie(int newX, int newY)=0;
-	virtual void akcja();
+	void kolizja(Organizm& oponent) override;
+	virtual void rozmnazanie(int newX, int newY) = 0;
+	void akcja() override;
 };
 }
 

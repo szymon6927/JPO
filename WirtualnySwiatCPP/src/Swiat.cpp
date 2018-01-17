@@ -23,7 +23,7 @@
 #include "zwierzeta/Hipopotam.h"
 
 Swiat::Swiat() {
-	logger.push_back("\tUtworzenie Swiata");
+//	logger.push_back("\tUtworzenie Swiata");
 }
 
 bool Swiat::sortowanie(Organizm* i, Organizm* j) {
@@ -64,10 +64,18 @@ void Swiat::rysujSwiat() {
 }
 
 Organizm* Swiat::znajdzOrganizmPoPozycji(int x, int y) {
+	assert(x < wielkoscSwiata && x >= 0);
+	assert(y < wielkoscSwiata && y >= 0);
 	return mapaOrganizmow[x][y].get();
 }
 
 void Swiat::zamienMiejscami(int x1, int y1, int x2, int y2) noexcept {
+	assert(x1 < wielkoscSwiata && x1 >= 0);
+	assert(y1 < wielkoscSwiata && y1 >= 0);
+
+	assert(x2 < wielkoscSwiata && x2 >= 0);
+	assert(y2 < wielkoscSwiata && y2 >= 0);
+
 	mapaOrganizmow[x1][y1]->setX(x2);
 	mapaOrganizmow[x1][y1]->setY(y2);
 
@@ -79,6 +87,7 @@ void Swiat::zamienMiejscami(int x1, int y1, int x2, int y2) noexcept {
 }
 
 void Swiat::wykonajTure() {
+	std::vector<Organizm*> organizmy;
 
 	for (auto& col : mapaOrganizmow) {
 		for (auto& organizm : col) {
@@ -111,24 +120,20 @@ void Swiat::wykonajTure() {
 std::string Swiat::zachowajSwiat() const {
 
 	std::string str;
-	for (unsigned i = 0; i < organizmy.size(); i++) {
-		//dla kazdego elementy wektora wypisz pozycje,wiek,rodzaj i stun:
-		// W12x15w5s1
-		//g++ -std=c++0x zeby dzialalo
-		//http://www.linuxquestions.org/questions/programming-9/error-to_string-was-not-declared-in-this-scope-4175513090/
-		if (organizmy[i] != nullptr) {
-			str.push_back(organizmy[i]->getSymbol());
-			str.append("x");
-			str.append(std::to_string(organizmy[i]->getX()));
-			str.append("y");
-			str.append(std::to_string(organizmy[i]->getY()));
-			str.append("w");
-			str.append(std::to_string(organizmy[i]->getWiek()));
-			str.append(" ");
+	for (auto& col : mapaOrganizmow) {
+		for (auto& organizm : col) {
+			if (organizm != nullptr) {
+				str.push_back(organizm->getSymbol());
+				str.append("x");
+				str.append(std::to_string(organizm->getX()));
+				str.append("y");
+				str.append(std::to_string(organizm->getY()));
+				str.append("w");
+				str.append(std::to_string(organizm->getWiek()));
+				str.append(" ");
+			}
 		}
-
 	}
-	str.pop_back();
 	str.append("\n");
 
 	return str;
@@ -281,7 +286,7 @@ void Swiat::inputParser(int argc, char** argv) {
 					mapaOrganizmow[x][y] = std::make_unique<roslina::Trawa>(*this, x, y);
 					break;
 				default:
-					std::cout << "Zly format!";
+					assert(false);
 				}
 			//podstawowe parametry przy wczytywaniu
 			mapaOrganizmow[x][y]->setWiek(w);

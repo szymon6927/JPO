@@ -16,8 +16,8 @@ class Ciern: public Roslina {
 public:
 	Ciern(Swiat& swiat, int x, int y);
 	virtual ~Ciern();
-	void akcja();
-	void rozmnazanie(int newX, int newY);
+	void akcja() override;
+	void rozmnazanie(int newX, int newY) override;
 	char getSymbol() const override;
 };
 
