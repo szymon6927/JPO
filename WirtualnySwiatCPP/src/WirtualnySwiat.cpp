@@ -27,7 +27,8 @@ int main(int argc, char** argv) {
 			try {
 				if (plik.is_open()) {
 					plik << swiat.zachowajSwiat();
-				} else {
+				}
+				else {
 					throw std::runtime_error("nie moge otworzyc tego pliku");
 				}
 			} catch (std::exception const& e) {
@@ -38,7 +39,8 @@ int main(int argc, char** argv) {
 				plik << swiat.zachowajSwiat();
 			}
 			plik.close();
-		} else if (control == "exit") {
+		}
+		else if (control == "exit") {
 			break;
 		}
 		swiat.wykonajTure();

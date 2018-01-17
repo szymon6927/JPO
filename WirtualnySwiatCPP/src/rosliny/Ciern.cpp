@@ -45,7 +45,7 @@ void Ciern::akcja() {
 }
 
 void Ciern::rozmnazanie(int newX, int newY) {
-	swiat.dodajOrganizm<Ciern>(newX, newY, "Narodziny narodziny-(rozmnozenie)");
+	swiat.dodajOrganizm<Ciern>(newX, newY, "Narodziny Ciernia-(rozmnozenie)");
 }
 
 char Ciern::getSymbol() const {

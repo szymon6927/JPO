@@ -28,14 +28,13 @@ class Organizm {
 public:
 	virtual void akcja()=0;
 	virtual void kolizja(Organizm& oponent)=0;
-	virtual void rysowanie() const;
 	virtual char getSymbol() const=0;
 	bool czyZywy() const;
 	void setAlive(bool alive);
 	int getInicjatywa() const;
 	int getWiek() const;
 	int getSila() const;
-	void setWiek();
+	void zwiekszWiek();
 	void setWiek(int wiek);
 	void zwiekszSile(int oIle);
 	int getX() const;

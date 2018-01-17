@@ -6,6 +6,7 @@
  */
 #include "Organizm.h"
 #include "Swiat.h"
+#include <cassert>
 
 Organizm::Organizm(Swiat& swiat, int sila, int inicjatywa, int x, int y) :
 		swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y) {
@@ -27,16 +28,12 @@ int Organizm::getWiek() const {
 	return wiek;
 }
 
-void Organizm::setWiek() {
+void Organizm::zwiekszWiek() {
 	this->wiek += 1;
 }
 
 void Organizm::zwiekszSile(int oIle) {
 	sila = sila + oIle;
-}
-
-void Organizm::rysowanie() const {
-	swiat.mapa[x][y] = getSymbol();
 }
 
 int Organizm::getX() const {
@@ -56,9 +53,11 @@ void Organizm::setWiek(int wiek) {
 }
 
 void Organizm::setX(int posX) {
+	assert(x >= 0 && x < 20);
 	x = posX;
 }
 
 void Organizm::setY(int posY) {
+	assert(x >= 0 && x < 20);
 	y = posY;
 }

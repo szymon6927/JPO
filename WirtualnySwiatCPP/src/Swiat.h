@@ -21,7 +21,6 @@
 class Swiat {
 private:
 	static bool sortowanie(Organizm* i, Organizm* j);
-	static bool sortowanieZywych(Organizm* i, Organizm* j);
 
 	static const int wielkoscSwiata = 20;
 
@@ -29,10 +28,13 @@ private:
 	std::vector<Organizm*> organizmy;
 public:
 	Organizm* znajdzOrganizmPoPozycji(int x, int y);
+
+	/**
+	 * @details pole (x1,y1) musi byc zajête, pole (x1, y2) mo¿e byc puste
+	 */
 	void zamienMiejscami(int x1, int y1, int x2, int y2) noexcept; // move ctor zawsze noexcept (przezuca tylko pointery) ~ silna konwecja
 
 	std::vector<std::string> logger;
-	char** mapa;
 
 	void wykonajTure();
 	void rysujSwiat();
