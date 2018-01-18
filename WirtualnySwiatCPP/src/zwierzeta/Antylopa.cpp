@@ -47,31 +47,33 @@ void Antylopa::akcja() {
 	if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
 		swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
 	}
-	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol()) {
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol() && swiat.znajdzOrganizmPoPozycji(tmp_x,tmp_y) != this) {
 		rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)); //sprawdz to
 	}
-	else {
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
 		kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 	}
 }
 
 void Antylopa::kolizja(Organizm& oponent) {
-	int szansaUcieczki = rand() % 2; // daje mi 0 albo 1
-
 	std::string komunikat;
-	if (szansaUcieczki == 0) {
-		komunikat = "Antylopa ucieka w walce z: ";
+	int tmp_sila = oponent.getSila();
+
+	if (sila >= tmp_sila) {
+		oponent.setAlive(false);
+		komunikat = "Antylopa wygrywa z: ";
 		swiat.logger.push_back(komunikat += oponent.getSymbol());
-		//todo funkcja ucieczki
 	}
-	else {
-		int tmp_sila = oponent.getSila();
-		if (sila >= tmp_sila) {
-			oponent.setAlive(false);
-			komunikat = "Antylopa wygrywa z: ";
+	else if (sila < tmp_sila) {
+		int szansaUcieczki = rand() % 2; // daje mi 0 albo 1
+
+		if (szansaUcieczki == 0) {
+			komunikat = "Antylopa ucieka w walce z: ";
 			swiat.logger.push_back(komunikat += oponent.getSymbol());
+			this->akcja();
+			//todo funkcja ucieczki
 		}
-		else if (sila < tmp_sila) {
+		else {
 			setAlive(false);
 			komunikat = "Antylopa przegrywa z: ";
 			swiat.logger.push_back(komunikat += oponent.getSymbol());
@@ -89,7 +91,8 @@ void Antylopa::rozmnazanie(Organizm& partner) {
 	int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
 	for (; j < 8; j++) {
-		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20 && swiat.znajdzOrganizmPoPozycji(nx[j], ny[j]) == nullptr) {
+		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
+				&& swiat.znajdzOrganizmPoPozycji(nx[j], ny[j]) == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
