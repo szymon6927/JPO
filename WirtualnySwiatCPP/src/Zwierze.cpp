@@ -41,14 +41,11 @@ void Zwierze::akcja() {
 	if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
 		swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
 	}
-	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol()) {
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol() && swiat.znajdzOrganizmPoPozycji(tmp_x,tmp_y) != this) {
 		rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 	}
 	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
 		kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
-		if (czyZywy()) {
-			swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
-		}
 	}
 }
 

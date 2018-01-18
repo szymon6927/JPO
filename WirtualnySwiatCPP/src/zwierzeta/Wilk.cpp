@@ -28,8 +28,9 @@ void Wilk::rozmnazanie(Organizm& partner) {
 	int nx[] = { x, x, x + 1, x - 1, tx, tx, tx + 1, tx - 1 };
 	int ny[] = { y + 1, y - 1, y, y, ty + 1, ty - 1, ty, ty };
 
-	for (unsigned j; j < 8; j++) {
-		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20 && swiat.znajdzOrganizmPoPozycji(nx[j], ny[j]) == nullptr) {
+	for (; j < 8; j++) {
+		if (nx[j] >= 0 && nx[j] < 20 && ny[j] >= 0 && ny[j] < 20
+				&& swiat.znajdzOrganizmPoPozycji(nx[j], ny[j]) == nullptr) {
 			miejsceWgospodzie = true;
 			break;
 		}
