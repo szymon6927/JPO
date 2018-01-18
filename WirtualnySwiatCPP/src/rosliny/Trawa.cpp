@@ -23,7 +23,7 @@ void Trawa::rozmnazanie(int newX, int newY) {
 }
 
 char Trawa::getSymbol() const {
-	return 'g';
+	return 't';
 }
 
 }
