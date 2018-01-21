@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 					plik << swiat.zachowajSwiat();
 				}
 				else {
-					throw std::runtime_error("nie moge otworzyc tego pliku");
+					throw std::runtime_error("Nie moge otworzyc tego pliku");
 				}
 			} catch (std::exception const& e) {
 				std::cout << "Blad " << e.what();

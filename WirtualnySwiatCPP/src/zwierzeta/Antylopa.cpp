@@ -71,7 +71,6 @@ void Antylopa::kolizja(Organizm& oponent) {
 			komunikat = "Antylopa ucieka w walce z: ";
 			swiat.logger.push_back(komunikat += oponent.getSymbol());
 			this->akcja();
-			//todo funkcja ucieczki
 		}
 		else {
 			setAlive(false);
