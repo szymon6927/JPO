@@ -1,10 +1,3 @@
-/*
- * Roslina.h
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include "Organizm.h"
 
 #ifndef ROSLINA_H_

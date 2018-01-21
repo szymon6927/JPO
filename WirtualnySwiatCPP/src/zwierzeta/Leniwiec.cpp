@@ -1,10 +1,3 @@
-/*
- * Leniwiec.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include "Leniwiec.h"
 #include "../Swiat.h"
 
@@ -46,7 +39,7 @@ void Leniwiec::akcja() {
 			swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
 		}
 		else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol() && swiat.znajdzOrganizmPoPozycji(tmp_x,tmp_y) != this) {
-			rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)); //sprawdz to
+			rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 		}
 		else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
 			kolizja(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));

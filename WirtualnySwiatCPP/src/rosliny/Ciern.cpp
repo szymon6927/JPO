@@ -1,9 +1,3 @@
-/*
- * Ciern.cpp
- *
- *  Created on: 03.01.2018
- *      Author: Szymon
- */
 #include "Ciern.h"
 #include "../Swiat.h"
 

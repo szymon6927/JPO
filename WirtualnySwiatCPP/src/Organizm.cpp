@@ -1,9 +1,3 @@
-/*
- * Organizm.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
 #include "Organizm.h"
 #include "Swiat.h"
 #include <cassert>

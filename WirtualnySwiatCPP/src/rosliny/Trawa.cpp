@@ -1,10 +1,3 @@
-/*
- *  * Trawa.cpp
- *
- *  Created on: 03.01.2018
- *      Author: Szymon
- */
-
 #include "Trawa.h"
 #include "../Swiat.h"
 

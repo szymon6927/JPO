@@ -1,10 +1,3 @@
-/*
- * Ciern.h
- *
- *  Created on: 03.01.2018
- *      Author: Szymon
- */
-
 #include "../Roslina.h"
 
 #ifndef ROSLINY_CIERN_H_

@@ -1,12 +1,5 @@
-/*
- * Wilk.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include "Wilk.h"
-#include "../Swiat.h" //bez tego blad kompilacji :/
+#include "../Swiat.h"
 
 namespace zwierze {
 

@@ -1,10 +1,3 @@
-/*
- * Hipopotam.cpp
- *
- *  Created on: 04.01.2018
- *      Author: Szymon
- */
-
 #include "Hipopotam.h"
 #include "../Swiat.h"
 

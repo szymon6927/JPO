@@ -1,9 +1,3 @@
-/*
- * Antylopa.h
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
 #include "../Zwierze.h"
 
 #ifndef ZWIERZETA_ANTYLOPA_H_

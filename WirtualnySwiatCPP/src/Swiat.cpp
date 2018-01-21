@@ -1,10 +1,3 @@
-/*
- * Swiat.cpp
-
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
 #include <fstream>
 #include <cassert>
 #include <cstring>
@@ -23,7 +16,6 @@
 #include "zwierzeta/Hipopotam.h"
 
 Swiat::Swiat() {
-//	logger.push_back("\tUtworzenie Swiata");
 }
 
 bool Swiat::sortowanie(Organizm* i, Organizm* j) {
@@ -139,11 +131,6 @@ std::string Swiat::zachowajSwiat() const {
 	return str;
 }
 
-void Swiat::utworzSwiat() {
-	//nie zapomnij ustawic adresu mapy do rysowania!!!
-	//asserty, zeby pozycje nie byly wieksze niz wyymiar mapy, bo segvfault
-}
-
 Swiat::~Swiat() {
 	std::cout << "Destrukcja mapy" << std::endl;
 	std::cout << "Zabijamy organizmy" << std::endl;
@@ -240,12 +227,12 @@ void Swiat::inputParser(int argc, char** argv) {
 					} catch (char e) {
 						std::cout << "Niepoprawny znak: " << e << std::endl;
 						std::cout << "Dopuszczalne znaki:" << std::endl;
-						std::cout << "W - wilk; O - Owca; H - hipopotam" << std::endl;
-						std::cout << "A - antylopa; L - Leniwiec" << std::endl;
+						std::cout << "W - wilk; O - owca; H - hipopotam" << std::endl;
+						std::cout << "A - antylopa; L - leniwiec" << std::endl;
 						std::cout << "g - guarana; c - ciern; t - trawa" << std::endl;
 						std::cout << "x - polozenie w osi X; y - polozenie w osi Y" << std::endl;
 						std::cout << "w - wiek organizmu" << std::endl;
-						std::cout << "Przykladowa konstrukcja: Hx2y0w5 Wx13y7" << std::endl;
+						std::cout << "Przykladowa konstrukcja: Hx2y0 Wx13y7 Ox1y1 Lx15y7" << std::endl;
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -257,7 +244,7 @@ void Swiat::inputParser(int argc, char** argv) {
 		assert(x < 20);
 		assert(y < 20);
 		assert(zwierzak != 0);
-		//sprawdzanie, czy mapaOrganizmow[x][y] == NULL
+		//sprawdzanie, czy mapaOrganizmow[x][y] == nullptr
 		if (mapaOrganizmow[x][y] == nullptr) {
 			switch (zwierzak)
 				{

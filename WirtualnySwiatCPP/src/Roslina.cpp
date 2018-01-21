@@ -1,9 +1,3 @@
-/*
- * Roslina.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
 #include "Swiat.h"
 #include "Roslina.h"
 
@@ -44,7 +38,6 @@ void Roslina::akcja() {
 }
 
 void Roslina::kolizja(Organizm& oponent) {
-	//jezeli zwierzaki te same = rozmnazanie
 	int tmp_sila = oponent.getSila();
 
 	if (sila >= tmp_sila) {

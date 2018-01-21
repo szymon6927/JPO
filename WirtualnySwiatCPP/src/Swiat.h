@@ -1,10 +1,3 @@
-/*
- * Swiat.h
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -38,7 +31,6 @@ public:
 
 	void wykonajTure();
 	void rysujSwiat();
-	void utworzSwiat();
 	std::string zachowajSwiat() const;
 	void inputParser(int argc, char** argv);
 
@@ -57,7 +49,6 @@ void Swiat::dodajOrganizm(int x, int y, const std::string& log) {
 	assert(y < wielkoscSwiata && y >= 0);
 
 	mapaOrganizmow[x][y] = std::make_unique<T>(*this, x, y);
-	//organizmy.push_back(mapaOrganizmow[x][y].get());
 	logger.push_back(log);
 }
 

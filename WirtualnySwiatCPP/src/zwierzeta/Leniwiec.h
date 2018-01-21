@@ -1,10 +1,3 @@
-/*
- * Leniwiec.h
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include "../Zwierze.h"
 
 #ifndef ZWIERZETA_LENIWIEC_H_

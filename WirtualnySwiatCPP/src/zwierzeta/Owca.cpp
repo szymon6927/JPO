@@ -1,10 +1,3 @@
-/*
- * Owca.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
-
 #include "Owca.h"
 #include "../Swiat.h"
 

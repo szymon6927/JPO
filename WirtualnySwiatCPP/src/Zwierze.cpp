@@ -1,9 +1,3 @@
-/*
- * Zwierze.cpp
- *
- *  Created on: 28.12.2017
- *      Author: Szymon
- */
 #include "Swiat.h"
 #include "Zwierze.h"
 
@@ -41,7 +35,7 @@ void Zwierze::akcja() {
 	if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) == nullptr) {
 		swiat.zamienMiejscami(x, y, tmp_x, tmp_y);
 	}
-	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol() && swiat.znajdzOrganizmPoPozycji(tmp_x,tmp_y) != this) {
+	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y)->getSymbol() == getSymbol() && swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
 		rozmnazanie(*swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y));
 	}
 	else if (swiat.znajdzOrganizmPoPozycji(tmp_x, tmp_y) != this) {
@@ -50,7 +44,6 @@ void Zwierze::akcja() {
 }
 
 void Zwierze::kolizja(Organizm& oponent) {
-	//jezeli zwierzaki te same = rozmnazanie
 	int tmp_sila = oponent.getSila();
 
 	if (sila >= tmp_sila) {
